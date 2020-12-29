@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Redressed&family=Poppins&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        <title>Evenlode Development</title>
+        <meta name="description" content="Evenlode Development is a Charlotte, NC software development firm that offers a wide array of services from website creation to automation tools.">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta charset="UTF-8">
+        <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png">
+        <link rel="manifest" href="assets/icons/site.webmanifest">
+        <link rel="mask-icon" href="assets/icons/safari-pinned-tab.svg" color="#5bbad5">
+        <link rel="shortcut icon" href="assets/icons/favicon.ico">
+        <meta name="apple-mobile-web-app-title" content="Evenlode">
+        <meta name="application-name" content="Evenlode">
+        <meta name="msapplication-TileColor" content="#2b5797">
+        <meta name="msapplication-config" content="assets/icons/browserconfig.xml">
+        <meta name="theme-color" content="#ffffff">
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                color: black;
+                background: url("assets/hero.jpg");
+                height: 100vh;
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                overflow: hidden;
+                animation: daybreak 1s;
+            }
+            .container {
+                position: absolute;
+                top: 50vh;
+                left: 50vw;
+                transform: translate(-50%, -50%);
+            }
+            .pill {
+                width: 80vw;
+                padding: 40px;
+                border-radius: 50px;
+                background-color: rgba(255, 255, 255, 0.5);
+                position: relative;
+            }
+            header {
+                text-align: center;
+                animation: bottom-up 0.5s;
+                margin-bottom: 40px;
+            }
+            h1 {
+                font-family: "Redressed", script;
+                letter-spacing: 10px;
+                font-size: 45pt;
+                font-weight: normal;
+                margin: 0;
+            }
+            #logo {
+                border-radius: 50%;
+                width: 100px;
+                display: inline-block;
+                vertical-align: middle;
+                margin: 0 20px;
+            }
+            .content-pill {
+                font-size: 24px;
+                border-radius: 50px;
+                font-family: "Poppins", sans-serif;
+                animation: bottom-up 1s;
+            }
+            .first-letter {
+                font-size: 42px;
+            }
+            footer {
+                padding: 20px 0;
+                font-size: 20px;
+                background-color: rgba(255, 255, 255, 0.5);
+                border-radius: 20px 0 0 0;
+                animation: fade-in 1.5s;
+                position: absolute;
+                bottom: 0;
+                right: 0;
+            }
+            a {
+                color: black;
+                padding: 20px;
+            }
+
+            @keyframes fade-in {
+                0% { opacity: 0; }
+                100% { opacity: 1; }
+            }
+            @keyframes bottom-up {
+                0% { top: 10vh; opacity: 0; }
+                100% { top: 0vh; opacity: 1; }
+            }
+            @keyframes daybreak {
+                0% {
+                    background-color: rgba(200,100,0,.5);    background-blend-mode: multiply;
+                }
+                100% {
+                    background-color: none;    background-blend-mode: multiply;
+                }
+            }
+
+            @media only screen and (max-width: 1020px) {
+                h1 {
+                    font-size: 28pt;
+                }
+            }
+
+            @media only screen and (max-width: 790px) {
+                #logo {
+                    display: block;
+                    text-align: center;    
+                    margin: auto;
+                    padding: 10px 0;
+                }
+            }
+
+            @media only screen and (max-width: 670px) {
+                .pill {
+                    padding: 10px 40px;
+                    border-radius: 0;
+                    width: calc(100vw - 80px);
+                    left: 0;
+                }
+                .content-pill {
+                    font-size: 18px;
+                }
+                .first-letter {
+                    font-size: 32px;
+                }
+            } 
+
+            @media only screen and (max-height: 600px) and (max-width: 500px) {
+                h1 {
+                    font-size: 18pt;
+                }
+                .first-letter {
+                    font-size: 16px;
+                }
+                .content-pill {
+                    font-size: 16px;
+                }
+                header {
+                    margin-bottom: 20px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <header class="pill">
+                <h1>Evenlode<img id="logo" src="assets/evenlode-small.png"/>Development</h1>
+            </header>
+            <main>
+                <div class="pill content-pill" id="home">
+                    <span class="first-letter">E</span>venlode Development is a family-run, Charlotte, NC-based software development firm. We offer a smorgasboard of services including creating and tweaking websites, crafting home and work automation software, building custom iOS and Android apps, and designing personalized browser extensions. 
+                    
+                </div>
+            </main>
+        </div>
+        <footer>
+            <a href="mailto:grams.david@ymail.com"><i class="fas fa-envelope"></i></a>
+            <a href="https://www.facebook.com/EvenlodeDev/" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
+        </footer>
+    </body>
+</html>
