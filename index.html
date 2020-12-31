@@ -22,6 +22,7 @@
                 position: fixed;
                 height: 100vh;
                 overflow: hidden;
+                width: 100vw;
             }
             body {
                 margin: 0;
@@ -29,7 +30,6 @@
                 color: black;
                 height: 100vh;
                 overflow: hidden;
-                animation: daybreak 1s;
             }
             .centered {
                 position: absolute;
@@ -40,14 +40,14 @@
             .pill {
                 width: 80vw;
                 padding: 40px;
-                border-radius: 50px;
+                border-radius: 40px;
                 background-color: rgba(255, 255, 255, 0.5);
                 position: relative;
             }
             .pill.hidden {
                 display: none;
             }
-            header, .header-pill {
+            .header-pill {
                 text-align: center;
                 animation: bottom-up 0.5s;
                 margin-bottom: 40px;
@@ -69,14 +69,14 @@
             }
             .content-pill {
                 font-size: 24px;
-                border-radius: 50px;
                 font-family: "Poppins", sans-serif;
                 animation: bottom-up 1s;
             }
             .first-letter {
                 font-size: 42px;
             }
-            footer {
+            header {
+                font-family: "Poppins", sans-serif;
                 padding: 20px 0;
                 font-size: 20px;
                 background-color: rgba(255, 255, 255, 0.5);
@@ -85,14 +85,108 @@
                 position: absolute;
                 top: 0;
                 right: 0;
+                z-index: 2;
             }
             a {
                 color: black;
-                padding: 20px;
                 text-decoration: none;
+            }
+            header a {
+                padding: 20px;
             }
             i {
                 font-style: normal;
+            }
+            li {
+                list-style: none;
+            }
+            li img {
+                width: 20px;
+                display: inline-block;
+                margin-right: 10px;
+                vertical-align: middle;
+            }
+
+            nav {
+                display: inline-block;
+            }
+            .nav-selected {
+                text-decoration: underline;
+            }
+            a:hover {
+                text-decoration: underline;
+            }
+            a.menu-bars:hover {
+                text-decoration: none;
+            }
+            .menu-bars {
+                display: none;
+            }
+
+            #slide-1::before {
+                background-image: url("assets/hero-small.jpg");
+            }
+            #slide-2::before {
+                background-image: url("assets/hero2-small.jpg");
+            }
+            #slide-3::before {
+                background-image: url("assets/hero3-small.jpg");
+            }
+            #slide-4::before {
+                background-image: url("assets/hero4-small.jpg");
+            }
+            #slide-5::before {
+                background-image: url("assets/hero5-small.jpg");
+            }
+            .slide, .slide::before {
+                width: 100vw;
+                height: 100vh;
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                display: none;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+            .slide::before {
+                content: ' ';
+                display: block;
+                opacity: 1;
+                transition: opacity 1s;
+            }
+            .slide.image-loaded::before {
+                opacity: 0;
+            }
+
+            .slide-visible {
+                display: block;
+            }
+            .slide-out {
+                transform-origin: top;
+                animation: cube-out 1s;
+            }
+            .slide-out.slide-up {
+                transform-origin: bottom !important;
+            }
+            @keyframes cube-out {
+                0% {transform: scaleY(1);}
+                100% {transform: scaleY(0);}
+            }
+            .slide-ready {
+                transform: scaleY(0);
+            }
+            .slide-in {
+                transform: scaleY(0);
+                transform-origin: bottom;
+                animation: cube-in 1s;
+            }
+            .slide-in.slide-up {
+                transform-origin: top !important;
+            }
+            @keyframes cube-in {
+                0% {transform: scaleY(0);}
+                100% {transform: scaleY(1);}
             }
 
             @keyframes fade-in {
@@ -127,6 +221,28 @@
                 }
             }
 
+            @media only screen and (max-width: 700px) {
+                .menu-bars {
+                    display: inline;
+                }
+                nav {
+                    display: none;
+                }
+                header.nav-shown {
+                    border-radius: 0;
+                }
+                header.nav-shown nav {
+                    display: block;
+                    position: absolute;
+                    background-color: rgba(255, 255, 255, 0.5);
+                    border-radius: 0 0 20px 20px;
+                    margin-top: 20px;
+                }
+                header.nav-shown nav > a {
+                    display: block;
+                }
+            }
+
             @media only screen and (max-width: 670px) {
                 .pill {
                     padding: 10px 40px;
@@ -152,7 +268,7 @@
                 .content-pill {
                     font-size: 16px;
                 }
-                header, .header-pill {
+                .header-pill {
                     margin-bottom: 20px;
                 }
             }
@@ -164,6 +280,10 @@
 
             .fa-facebook-f:before {
                 content: "\f39e";
+            }
+
+            .fa-bars::before {
+                content: "\f0c9";
             }
 
             .sr-only-focusable:active, .sr-only-focusable:focus {
@@ -198,142 +318,87 @@
                 font-family: 'Font Awesome 5 Free';
                 font-weight: 900; 
             }
-
-            #slide-1 {
-                background-image: url("assets/hero-small.jpg");
-            }
-            #slide-2 {
-                background-image: url("assets/hero2-small.jpg");
-            }
-            #slide-3 {
-                background-image: url("assets/hero3-small.jpg");
-            }
-            #slide-4 {
-                background-image: url("assets/hero4-small.jpg");
-            }
-            #slide-5 {
-                background-image: url("assets/hero5-small.jpg");
-            }
-            .slide {
-                width: 100vw;
-                height: 100vh;
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;
-                display: none;
-                position: absolute;
-                top: 0;
-                left: 0;
-            }
-
-            .slide-visible {
-                display: block;
-            }
-            .slide-out {
-                transform-origin: top;
-                animation: cube-out 1s;
-            }
-            .slide-out.slide-up {
-                transform-origin: bottom !important;
-            }
-            @keyframes cube-out {
-                0% {transform: scaleY(1);}
-                100% {transform: scaleY(0);}
-            }
-            .slide-ready {
-                transform: scaleY(0);
-            }
-            .slide-in {
-                transform: scaleY(0);
-                transform-origin: bottom;
-                animation: cube-in 1s;
-            }
-            .slide-in.slide-up {
-                transform-origin: top !important;
-            }
-            @keyframes cube-in {
-                0% {transform: scaleY(0);}
-                100% {transform: scaleY(1);}
-            }
-
-            li {
-                list-style: none;
-            }
-            li img {
-                width: 20px;
-                display: inline-block;
-                margin-right: 10px;
-                vertical-align: middle;
-            }
         </style>
     </head>
     <body>
-        <div class="slide slide-visible" id="slide-1">
-            <div class="centered">
-                <header class="pill">
-                    <h1>Evenlode<img width=100 height=100 alt="Evenlode Logo" id="logo" src="assets/evenlode-small.png"/>Development</h1>
-                </header>
-                <div class="pill content-pill" id="home">
-                    <span class="first-letter">E</span>venlode Development is a family-run, Charlotte, NC-based software development firm. We offer a smorgasbord of services including creating and tweaking websites, crafting home and work automation software, building custom iOS and Android apps, and designing personalized browser extensions. 
-                </div>
-            </div>
-        </div>
-        <div class="slide" id="slide-2">
-            <div class="centered">
-                <div class="pill header-pill">
-                    <h2>About</h2>
-                </div>
-                <div class="pill content-pill" id="about">
-                    <span class="first-letter">A</span>bout Section
-                </div>
-            </div>
-        </div>
-        <div class="slide" id="slide-3">
-            <div class="centered">
-                <div class="pill header-pill">
-                    <h2>Services</h2>
-                </div>
-                <div class="pill content-pill" id="about">
-                    <span class="first-letter">S</span>ervices Section
-                </div>
-            </div>
-        </div>
-        <div class="slide" id="slide-4">
-            <div class="centered">
-                <div class="pill header-pill">
-                    <h2>Work</h2>
-                </div>
-                <div class="pill content-pill" id="work">
-                    <ul>
-                        <li><a href="https://shepherdhotels.com" target="_blank" rel="nofollow"><img alt="Shepherd Hotels Logo" src="https://shepherdhotels.com/favicon.ico">shepherdhotels.com</a></li>
-                        <li><a href="https://delishsisters.com" target="_blank" rel="nofollow"><img alt="Delish Sisters Logo" src="https://delishsisters.com/favicon.png">delishsisters.com</a></li>
-                        <li><a href="https://game103.net" target="_blank" rel="nofollow"><img alt="Game 103 Logo" src="https://game103.net/favicon.ico">game103.net</a></li>
-                        <li><a href="https://makingdorecipes.com" target="_blank" rel="nofollow"><img alt="Making Do Recipes Logo" src="https://makingdorecipes.com/favicon.ico">makingdorecipes.com</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="slide" id="slide-5">
-            <div class="centered">
-                <div class="pill header-pill">
-                    <h2>Contact</h2>
-                </div>
-                <div class="pill content-pill" id="contact">
-                    <span class="first-letter">C</span>ontact Section
-                </div>
-            </div>
-        </div>
-        <footer>
+        <header>
+            <a href="javascript:;" title="Menu" class="menu-bars"><i class="fas fa-bars"></i></a>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about">About</a>
+                <a href="/services">Services</a>
+                <a href="/work">Work</a>
+                <a href="/contact">Contact</a>
+            </nav>
             <a aria-label="Contact Evenlode by Email" title="Contact Evenlode by Email" href="mailto:contact@evenlode.dev"><i class="fas fa-envelope"></i></a>
             <a aria-label="Evenlode on Facebook" title="Evenlode on Facebook" href="https://www.facebook.com/EvenlodeDev/" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
-        </footer>
+        </header>
+        <main>
+            <div class="slide slide-visible" id="slide-1" data-url="/">
+                <div class="centered">
+                    <div class="pill header-pill">
+                        <h1>Evenlode<img width=100 height=100 alt="Evenlode Logo" id="logo" src="assets/evenlode-small.png"/>Development</h1>
+                    </div>
+                    <div class="pill content-pill">
+                        <span class="first-letter">E</span>venlode Development is a family-run, Charlotte, NC-based software development firm. We offer a smorgasbord of services including creating and tweaking websites, crafting home and work automation software, building custom iOS and Android apps, and designing personalized browser extensions. 
+                    </div>
+                </div>
+            </div>
+            <div class="slide" id="slide-2" data-url="/about">
+                <div class="centered">
+                    <div class="pill header-pill">
+                        <h2>About</h2>
+                    </div>
+                    <div class="pill content-pill">
+                        <span class="first-letter">A</span>bout Section
+                    </div>
+                </div>
+            </div>
+            <div class="slide" id="slide-3" data-url="/services">
+                <div class="centered">
+                    <div class="pill header-pill">
+                        <h2>Services</h2>
+                    </div>
+                    <div class="pill content-pill">
+                        <span class="first-letter">S</span>ervices Section
+                    </div>
+                </div>
+            </div>
+            <div class="slide" id="slide-4" data-url="/work">
+                <div class="centered">
+                    <div class="pill header-pill">
+                        <h2>Work</h2>
+                    </div>
+                    <div class="pill content-pill">
+                        <ul>
+                            <li><a href="https://shepherdhotels.com" target="_blank" rel="nofollow"><img alt="Shepherd Hotels Logo" src="https://shepherdhotels.com/favicon.ico">shepherdhotels.com</a></li>
+                            <li><a href="https://delishsisters.com" target="_blank" rel="nofollow"><img alt="Delish Sisters Logo" src="https://delishsisters.com/favicon.png">delishsisters.com</a></li>
+                            <li><a href="https://game103.net" target="_blank" rel="nofollow"><img alt="Game 103 Logo" src="https://game103.net/favicon.ico">game103.net</a></li>
+                            <li><a href="https://makingdorecipes.com" target="_blank" rel="nofollow"><img alt="Making Do Recipes Logo" src="https://makingdorecipes.com/favicon.ico">makingdorecipes.com</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide" id="slide-5" data-url="/contact">
+                <div class="centered">
+                    <div class="pill header-pill">
+                        <h2>Contact</h2>
+                    </div>
+                    <div class="pill content-pill">
+                        <span class="first-letter">C</span>ontact Section
+                    </div>
+                </div>
+            </div>
+        </main>
 
         <script>
+            var originalTitle = document.title;
             /**
              * Change slide by
              * @param {number} by - The amount to change slides by.
+             * @param {boolean} noHistory - True if we should not touch history.
              **/
-            function changeSlideBy( by ) {
+            function changeSlideBy( by, noHistory ) {
                 if( !by ) return;
                 var slides = document.querySelectorAll(".slide");
                 var next = 0;
@@ -344,14 +409,15 @@
                         break;
                     }
                 }
-                changeSlide(next, by < 0);
+                changeSlide(next, by < 0, noHistory);
             }
             /**
              * Change slide
              * @param {number} next - The index of the next slide.
              * @param {boolean} [up] - true if we are moving the cube up (i.e. from 2 -> 1 rather than 1 -> 2)
+             * @param {boolean} noHistory - True if we should not touch history.
              **/
-            function changeSlide( next, up ) {
+            function changeSlide( next, up, noHistory ) {
                 if( document.querySelector(".slide-ready, .slide-out, .slide-in, .slide-up") ) return;
                 var slides = document.querySelectorAll(".slide");
                 var current = document.querySelector(".slide-visible");
@@ -361,6 +427,7 @@
                 }
                 slides[next].classList.add("slide-visible");
                 slides[next].classList.add("slide-ready");
+                if( !noHistory ) updateUrl(slides[next].getAttribute("data-url")); // change the url to the new slide unless we are told not to
                 hidePills(slides[next]);
                 setTimeout( function() {
                     current.classList.add("slide-out");
@@ -377,6 +444,54 @@
                     current.classList.remove("slide-up");
                     slides[next].classList.remove("slide-up");
                 }, 1000 ); // make sure this time matches the CSS
+            }
+            /**
+             * Update the url
+             * @param {string} url - The url of the slide to change to.
+             * @param {boolean} repalce - True if we should replace rather than push state.
+             * @param {boolean} noHistory - True if we should not touch history.
+             */
+            function updateUrl( url, replace, noHistory ) {
+                if( !noHistory ) if( document.querySelector(".slide-ready, .slide-out, .slide-in, .slide-up") ) return; // don't update if we can't
+
+                var niceName = capitalize(url.replace(/\//g,""));
+                var title = (niceName ? (niceName + ": ") : "") + originalTitle;
+                document.title = title;
+
+                if( !noHistory ) {
+                    if( replace ) window.history.replaceState({},"",url);
+                    else window.history.pushState({},"",url);
+                }
+
+                // update the navbar
+                document.querySelectorAll("nav > a").forEach(function(el) {
+                    if( el.getAttribute("href") === url ) {
+                        el.classList.add("nav-selected");
+                    }
+                    else {
+                        el.classList.remove("nav-selected");
+                    }
+                })
+
+                // ensure we are going to the right slide
+                var slide = document.querySelector(".slide[data-url='"+url+"']");
+                if( slide && !slide.classList.contains("slide-visible") ) {
+                    var slideVisible = document.querySelector(".slide-visible");
+                    var index = parseInt(slide.getAttribute("id").match(/\d/));
+                    var currentIndex = parseInt(slideVisible.getAttribute("id").match(/\d/));
+                    if( replace ) {
+                        slideVisible.classList.remove("slide-visible");
+                        slide.classList.add("slide-visible");
+                    }
+                    else changeSlideBy(index - currentIndex, noHistory);
+                }
+            }
+            /**
+             * Capitalize.
+             **/
+            function capitalize(s) {
+                if (typeof s !== 'string') return '';
+                return s.charAt(0).toUpperCase() + s.slice(1);
             }
             /**
              * Replay animation
@@ -399,7 +514,6 @@
                     el.classList.add("hidden");
                 });
             }
-
             /**
              * Load images.
              */
@@ -415,10 +529,26 @@
                     var src = "assets/hero" + (index ? (index+1) : "") + ".jpg";
                     var img = new Image;
                     img.onload = function() {
-                        el.style.backgroundImage = "url('"+src+"')";
+                        el.style.backgroundImage = "url('"+src+"')"; // this is smoother than the background-image transition - to put the blurred one behind
+                        el.classList.add("image-loaded");
                     }
                     img.src = src;
                 });
+            }
+            /**
+             * Normalize a URL
+             * @param {string} url - The url to normalize.
+             */
+            function normalizeUrl( url ) {
+                if(!url) return "/";
+                var normalUrl = "/";
+                var onlyBaseLetters = url.replace(/\//g,"");
+                document.querySelectorAll(".slide").forEach(function(el) {
+                    if( onlyBaseLetters === el.getAttribute("data-url").replace("/","") ) {
+                        normalUrl = el.getAttribute("data-url")
+                    }
+                });
+                return normalUrl;
             }
 
             window.onwheel = function(event) {
@@ -439,7 +569,42 @@
                 else changeSlideBy(1);
             }, {passive: false});
 
+            // handle redirect from the 404 page
+            (function(){
+                var redirect = normalizeUrl(sessionStorage.redirect);
+                delete sessionStorage.redirect;
+                updateUrl(redirect ? redirect : normalizeUrl(location.pathname), true); // always start out with a state
+            })();
+            // load images
             loadImages();
+            // nav
+            document.querySelectorAll("nav > a").forEach(function(a) {
+                a.onclick = function() {
+                    if( !a.classList.contains("nav-selected") ) {
+                        if( document.querySelector(".nav-shown") ) {
+                            document.querySelector(".menu-bars").click();
+                        }
+                        updateUrl(a.getAttribute("href"));
+                    }
+                    return false;
+                }
+            });
+            // menu bars
+            document.querySelector(".menu-bars").onclick = function() {
+                var header = document.querySelector("header");
+                if(header.classList.contains("nav-shown")) {
+                    header.classList.remove("nav-shown");
+                }
+                else {
+                    header.classList.add("nav-shown");
+                }
+            }
+
+            window.onpopstate = function(e) {
+                if(e.state) {
+                    updateUrl( normalizeUrl(location.pathname), false, true ); // on pop state, update the url (forces the right slide) but do change change any history as that is changed in the pop state
+                }
+            };
         </script>
     </body>
 </html>
