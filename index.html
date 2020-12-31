@@ -428,7 +428,7 @@
                 }
                 slides[next].classList.add("slide-visible");
                 slides[next].classList.add("slide-ready");
-                if( !noHistory ) updateUrl(slides[next].getAttribute("data-url")); // change the url to the new slide unless we are told not to
+                if( !noHistory ) updateUrl(slides[next].getAttribute("data-url"), false, false, true); // change the url to the new slide unless we are told not to
                 hidePills(slides[next]);
                 setTimeout( function() {
                     current.classList.add("slide-out");
@@ -451,9 +451,10 @@
              * @param {string} url - The url of the slide to change to.
              * @param {boolean} repalce - True if we should replace rather than push state.
              * @param {boolean} noHistory - True if we should not touch history.
+             * @param {boolean} force - True if we should force a url update - i.e. we checked it is safe elsewhere.
              */
-            function updateUrl( url, replace, noHistory ) {
-                if( !noHistory ) if( document.querySelector(".slide-ready, .slide-out, .slide-in, .slide-up") ) return; // don't update if we can't
+            function updateUrl( url, replace, noHistory, force ) {
+                if( !noHistory && !force && document.querySelector(".slide-ready, .slide-out, .slide-in, .slide-up") ) return; // don't update if we can't
 
                 var niceName = capitalize(url.replace(/\//g,""));
                 var title = (niceName ? (niceName + ": ") : "") + originalTitle;
