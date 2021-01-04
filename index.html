@@ -805,13 +805,13 @@
                 }
             });
             window.addEventListener('touchend', function(e) {
-                if( blockEnd ) {
-                    blockEnd = false;
-                    return;
-                }
                 var xMore = false;
                 if( Math.abs(oldY - newY) < Math.abs(oldX - newX) ) xMore = true;
                 if( !xMore && Math.abs(oldY - newY) >= 20 ) {
+                    if( blockEnd ) {
+                        blockEnd = false;
+                        return;
+                    }
                     if( oldY < newY ) changeSlideBy(-1);
                     else changeSlideBy(1);
                 }
