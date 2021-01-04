@@ -69,8 +69,11 @@
             }
             .content-pill {
                 font-size: 24px;
+                overflow: hidden;
                 font-family: "Poppins", sans-serif;
                 animation: bottom-up 1s;
+                max-height: 50vh;
+                overflow-y: auto;
             }
             .first-letter {
                 font-size: 42px;
@@ -85,7 +88,7 @@
                 position: absolute;
                 top: 0;
                 right: 0;
-                z-index: 2;
+                z-index: 3;
             }
             a {
                 color: black;
@@ -97,14 +100,23 @@
             i {
                 font-style: normal;
             }
-            li {
+            ul {
+                margin: 0;
+            }
+            .custom-li {
+                padding: 0;
+            }
+            .custom-li li, .custom-li li {
                 list-style: none;
             }
-            li img {
+            li img, li i {
                 width: 20px;
                 display: inline-block;
                 margin-right: 10px;
                 vertical-align: middle;
+            }
+            li > ul > li {
+                font-size: 80%;
             }
 
             nav {
@@ -205,6 +217,77 @@
                     background-color: none;    background-blend-mode: multiply;
                 }
             }
+            .frames {
+                position: relative;
+                margin-top: 20px;
+                display: grid;
+            }
+            .frame {
+                opacity: 0;
+                grid-area: 1/1;
+                position: relative;
+            }
+            .frame-out-left {
+                animation: left-out 1s;
+            }
+            .frame-in-left {
+                animation: left-in 1s;
+            }
+            .frame-out-right {
+                animation: right-out 1s;
+            }
+            .frame-in-right {
+                animation: right-in 1s;
+            }
+            .frame-visible {
+                opacity: 1;
+                z-index: 2;
+            }
+            .frame-dots {
+                margin-top: 20px;
+                text-align: center;
+            }
+            .frame-dot {
+                display: inline-block;
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                background-color: white;
+                cursor: pointer;
+                user-select: none;
+            }
+            .frame-dot-selected {
+                background-color: grey;
+            }
+            .profile-image {
+                float: left;
+                margin: 0 10px 10px 0;
+                border-radius: 50%;
+                width: 200px;
+            }
+            .profile-frame > span {
+                font-size: 80%;
+            }
+            h3,h4 {
+                margin: 0;
+            }
+
+            @keyframes left-out {
+                0% { transform: none; opacity: 1; }
+                100% { transform: translateX(-100%); opacity: 0; }
+            }
+            @keyframes left-in {
+                0% { transform: translateX(-100%); opacity: 0; }
+                100% { transform: none; opacity: 1; }
+            }
+            @keyframes right-out {
+                0% { transform: none; opacity: 1; }
+                100% { transform: translateX(100%); opacity: 0; }
+            }
+            @keyframes right-in {
+                0% { transform: translateX(100%); opacity: 0; }
+                100% { transform: none; opacity: 1; }
+            }
 
             @media only screen and (max-width: 1020px) {
                 h1,h2 {
@@ -273,6 +356,22 @@
                     margin-bottom: 20px;
                 }
             }
+
+            @media only screen and (max-width: 500px) {
+                .profile-image {
+                    float: none;
+                    margin: 0;
+                    display: block;
+                    margin: auto;
+                }
+                h3, h4 {
+                    text-align: center;
+                }
+                .content-pill {
+                    max-height: 60vh;
+                }
+            }
+
             /* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
             readers do not read off random characters that represent icons */
             .fa-envelope:before {
@@ -341,7 +440,7 @@
                         <h1>Evenlode<img width=100 height=100 alt="Evenlode Logo" id="logo" src="assets/evenlode-small.png"/>Development</h1>
                     </div>
                     <div class="pill content-pill">
-                        <span class="first-letter">E</span>venlode Development is a family-run, Charlotte, NC-based software development firm. We offer a smorgasbord of services including creating and tweaking websites, crafting home and work automation software, building custom iOS and Android apps, and designing personalized browser extensions. 
+                        <span class="first-letter">E</span>venlode Development is a family-run software development firm based in Charlotte, NC. We offer a smorgasbord of services including creating and tweaking websites, crafting home and work automation software, building custom iOS and Android apps, and assistance with hardware and software setup. 
                     </div>
                 </div>
             </div>
@@ -351,7 +450,32 @@
                         <h2>About</h2>
                     </div>
                     <div class="pill content-pill">
-                        <span class="first-letter">A</span>bout Section
+                        <span class="first-letter">W</span>e are passionate brothers eager to find a solution to your unqiue technology problems.
+                        <div class="frames">
+                            <div class="frame profile-frame frame-visible">
+                                <img class="profile-image" src="assets/david.jpg" alt="David Grams"/>
+                                <h3>David Grams</h3>
+                                <h4>Manager</h4>
+                                <span>
+                                    David has experience with opening and overseeing multiple gym locations. He has a degree in business management from Liberty University.
+                                </span>
+                            </div>
+                            <div class="frame profile-frame">
+                                <img class="profile-image" src="assets/james.jpg" alt="James Grams"/>
+                                <h3>James Grams</h3>
+                                <h4>Developer</h4>
+                                <span>
+                                    James has been developing websites since 2008 and apps since 2014. 
+                                    He holds a degree in computer science from Gordon College and graduated with a 3.98 GPA. 
+                                    James worked for Christianbook.com in web development for almost four years where he attended workshops hosted by companies such as Google and Elastic.
+                                    Currently, he works for Pavilion Development with an offical title of IT Systems Administrator. He manages both IT and the company's websites.
+                                </span>
+                            </div>
+                            <div class="frame-dots">
+                                <div class="frame-dot frame-dot-selected"></div>
+                                <div class="frame-dot"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -361,7 +485,19 @@
                         <h2>Services</h2>
                     </div>
                     <div class="pill content-pill">
-                        <span class="first-letter">S</span>ervices Section
+                        <span class="first-letter">W</span>e enthusiastically offer the following services:
+                        <ul>
+                            <li>Website/app development and modification</li>
+                            <li>Productivity and automation programming
+                                <ul>
+                                    <li>e.g. A tool that automatically transfers data from websites into a spreadsheet</li>
+                                </ul>
+                            </li>
+                            <li>Browser extensions to enhance/remove content</li>
+                            <li>Smart Home media solutions</li>
+                            <li>Hardware and software setup</li>
+                            <li>Technology consulting</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -371,11 +507,45 @@
                         <h2>Work</h2>
                     </div>
                     <div class="pill content-pill">
-                        <ul>
-                            <li><a href="https://shepherdhotels.com" target="_blank" rel="nofollow"><img alt="Shepherd Hotels Logo" src="https://shepherdhotels.com/favicon.ico">shepherdhotels.com</a></li>
-                            <li><a href="https://delishsisters.com" target="_blank" rel="nofollow"><img alt="Delish Sisters Logo" src="https://delishsisters.com/favicon.png">delishsisters.com</a></li>
-                            <li><a href="https://game103.net" target="_blank" rel="nofollow"><img alt="Game 103 Logo" src="https://game103.net/favicon.ico">game103.net</a></li>
-                            <li><a href="https://makingdorecipes.com" target="_blank" rel="nofollow"><img alt="Making Do Recipes Logo" src="https://makingdorecipes.com/favicon.ico">makingdorecipes.com</a></li>
+                        <ul class="custom-li">
+                            <div class="frames">
+                                <div class="frame frame-visible">
+                                    <h3>Websites</h3>
+                                    <li><a href="https://game103.net" target="_blank" rel="nofollow"><img alt="Game 103 Logo" src="https://game103.net/favicon.ico">Game 103</a></li>
+                                    <li><a href="https://makingdorecipes.com" target="_blank" rel="nofollow"><img alt="Making Do Recipes Logo" src="https://makingdorecipes.com/favicon.ico">Making Do Recipes</a></li>
+                                    <li><a href="https://racecourse-demo.herokuapp.com" target="_blank" rel="nofollow"><img alt="Racecourse Logo" src="https://jamesgrams.com/images/racecourse.png">Racecourse</a></li>
+                                    <li><a href="https://grams.family" target="_blank" rel="nofollow"><img alt="Grams Family Logo" src="https://grams.family/favicon.ico">Grams Family</a></li>
+                                    <li><a href="https://jamesgrams.com" target="_blank" rel="nofollow"><img alt="James Grams Logo" src="https://jamesgrams.com/images/icons/favicon.ico">James Grams</a></li>
+                                </div>
+                                <div class="frame">
+                                    <h3>Tools</h3>
+                                    <li><a href="https://github.com/jamesgrams/instagram-poster" target="_blank" rel="nofollow"><img alt="Instagram Poster Logo" src="https://www.instagram.com/favicon.ico">Instagram Poster</a></li>
+                                    <li><a href="https://github.com/jamesgrams/budgeteer" target="_blank" rel="nofollow"><img alt="Budgeteer Logo" src="https://raw.githubusercontent.com/jamesgrams/budgeteer/master/assets/logo.png">Budgeteer</a></li>
+                                    <li><a href="https://github.com/jamesgrams/ringleader-docker" target="_blank" rel="nofollow"><img alt="iExec Logo" src="https://iex.ec/favicon.ico">Ringleader</a></li>
+                                </div>
+                                <div class="frame">
+                                    <h3>Home Media</h3>
+                                    <li><a href="https://guystation.net" target="_blank" rel="nofollow"><img alt="GuyStation Logo" src="https://guystation.net/images/icons/favicon-32x32.png">GuyStation</a></li>
+                                    <li><a href="https://github.com/jamesgrams/spokapi" target="_blank" rel="nofollow"><img alt="Spokapi Logo" src="https://jamesgrams.com/images/spokapi.png">Spokapi</a></li>
+                                    <li><a href="https://github.com/jamesgrams/pub-chat" target="_blank" rel="nofollow"><img alt="Pub Chat Logo" src="https://github.com/jamesgrams/pub-chat/raw/master/assets/logo.png">Pub Chat</a></li>
+                                </div>
+                                <div class="frame">
+                                    <h3>Apps</h3>
+                                    <li><a href="https://play.google.com/store/apps/details?id=net.game103.ipahelper" target="_blank" rel="nofollow"><img alt="IPAide Logo" src="https://game103.net/images/icons/apps/ipaide.png">IPAide</a></li>
+                                    <li><a href="https://play.google.com/store/apps/details?id=edu.gordon.cs.bibleanimals" target="_blank" rel="nofollow"><img alt="Animals of the Bible Logo" src="https://game103.net/images/icons/apps/animalsofthebibleicon.webp">Animals of the Bible</a></li>
+                                </div>
+                                <div class="frame">
+                                    <h3>Browser Extensions</h3>
+                                    <li><a href="https://github.com/jamesgrams/foodcub" target="_blank" rel="nofollow"><img alt="Foodcub Logo" src="https://github.com/jamesgrams/foodcub/raw/master/icon32.png">Food Cub</a></li>
+                                </div>
+                                <div class="frame-dots">
+                                    <div class="frame-dot frame-dot-selected"></div>
+                                    <div class="frame-dot"></div>
+                                    <div class="frame-dot"></div>
+                                    <div class="frame-dot"></div>
+                                    <div class="frame-dot"></div>
+                                </div>
+                            </div>
                         </ul>
                     </div>
                 </div>
@@ -386,7 +556,10 @@
                         <h2>Contact</h2>
                     </div>
                     <div class="pill content-pill">
-                        <span class="first-letter">C</span>ontact Section
+                        <ul class="custom-li">
+                            <li><i class="fas fa-envelope"></i><a href="mailto:contact@evenlode.com">contact@evenlode.dev</a></li>
+                            <li><i class="fab fa-facebook-f"></i><a href="https://www.facebook.com/EvenlodeDev" target="_blank" rel="nofollow">facebook.com/EvenlodeDev</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -552,24 +725,124 @@
                 });
                 return normalUrl;
             }
+            /**
+             * Initialize frames.
+             */
+            function initializeFrames() {
+                document.querySelectorAll(".frames").forEach( function(frames) {
+                    frames.querySelectorAll(".frame-dot").forEach( function(dot, index) {
+                        dot.onclick = function() {
+                            if( document.querySelector(".frame-out-left,.frame-out-right,.frame-in-left,.frame-in-right") ) return;
+                            if( dot.classList.contains("frame-dot-selected") ) return;
 
+                            frames.querySelector(".frame-dot-selected").classList.remove("frame-dot-selected");
+                            dot.classList.add("frame-dot-selected");
+                            var frameVisible = frames.querySelector(".frame-visible");
+                            var visibleIndex = Array.from( frames.querySelectorAll(".frame") ).indexOf(frameVisible);
+                            var frame = frames.querySelectorAll(".frame")[index];
+
+                            var outClass = "frame-out-right";
+                            var inClass = "frame-in-left";
+                            if( visibleIndex < index ) {
+                                outClass = "frame-out-left";
+                                inClass = "frame-in-right";
+                            }
+
+                            frameVisible.classList.add(outClass);
+                            frame.classList.add(inClass);
+                            frameVisible.classList.remove("frame-visible");
+                            frame.classList.add("frame-visible");
+                            setTimeout( function() {
+                                frameVisible.classList.remove(outClass);
+                                frame.classList.remove(inClass);
+                            }, 1000 ); // make sure this matches css
+                        }
+                    } );
+                });
+            }
+
+            /**
+             * Bump frames.
+             * @param {number} number - The number of frames to bump by.
+             */
+            function bumpFrames(number) {
+                if( document.querySelector(".slide-ready, .slide-out, .slide-in, .slide-up") ) return;
+                var frames = document.querySelector(".slide-visible .frames");
+                if( frames ) {
+                    var frameList = Array.from( frames.querySelectorAll(".frame") );
+                    var visibleIndex = frameList.indexOf(frames.querySelector(".frame-visible"));
+                    var newIndex = (visibleIndex + number) % frameList.length;
+                    if( newIndex < 0 ) newIndex = frameList.length + newIndex;
+                    console.log(Array.from( frames.querySelectorAll(".frame-dot") )[newIndex]);
+                    Array.from( frames.querySelectorAll(".frame-dot") )[newIndex].click();
+                }
+            }
+
+            var oldY, newY, oldX, newX, blockEnd, wheelTimeout;
             window.onwheel = function(event) {
-                if( event.deltaY < 0 ) changeSlideBy(-1);
-                else if( event.deltaY > 0 ) changeSlideBy(1);
+                if( blockEnd ) {
+                    blockEnd = false;
+                    return;
+                }
+                // wheel event occurs before scroll so we have to do this.
+                wheelTimeout = setTimeout( function() {
+                    if( event.deltaY < 0 ) changeSlideBy(-1);
+                    else if( event.deltaY > 0 ) changeSlideBy(1);
+                }, 20);
             };
-            var oldY, newY;
             window.addEventListener('touchstart', function(e) {
                 oldY = e.touches[0].clientY;
+                oldX = e.touches[0].clientX;
                 newY = oldY;
+                newX = oldX;
             }, {passive: false});
             window.addEventListener('touchmove', function(e) {
                 newY = e.touches[0].clientY;
+                newX = e.touches[0].clientX;
             }, {passive: false});
+            // stop with scroll event
+            document.querySelectorAll(".content-pill").forEach( function(el) {
+                el.onscroll = function(e) {
+                    clearTimeout(wheelTimeout);
+                    blockEnd = true;
+                }
+            });
             window.addEventListener('touchend', function(e) {
-                if( Math.abs(oldY - newY) < 20 ) return;
-                if( oldY < newY ) changeSlideBy(-1);
-                else changeSlideBy(1);
+                if( blockEnd ) {
+                    blockEnd = false;
+                    return;
+                }
+                var xMore = false;
+                if( Math.abs(oldY - newY) < Math.abs(oldX - newX) ) xMore = true;
+                if( !xMore && Math.abs(oldY - newY) >= 20 ) {
+                    if( oldY < newY ) changeSlideBy(-1);
+                    else changeSlideBy(1);
+                }
+                else if( xMore && Math.abs(oldX - newX) >= 20 ) {
+                    if( oldX < newX ) bumpFrames(-1);
+                    else bumpFrames(1);
+                }
             }, {passive: false});
+            document.body.onkeyup = function(event) {
+                if( blockEnd ) {
+                    blockEnd = false;
+                    return;
+                }
+                switch( event.code ) {
+                    case "ArrowDown":
+                        changeSlideBy(1);
+                        break;
+                    case "ArrowUp":
+                        changeSlideBy(-1);
+                        break;
+                    case "ArrowLeft":
+                        bumpFrames(-1);
+                        break;
+                    case "ArrowRight":
+                        bumpFrames(1);
+                        break;
+                }
+            };
 
             // handle redirect from the 404 page
             (function(){
@@ -579,6 +852,8 @@
             })();
             // load images
             loadImages();
+            // initialize frames
+            initializeFrames();
             // nav
             document.querySelectorAll("nav > a").forEach(function(a) {
                 a.onclick = function() {
