@@ -451,7 +451,7 @@
                         <h2>About</h2>
                     </div>
                     <div class="pill content-pill">
-                        <span class="first-letter">W</span>e are passionate brothers eager to find a solution to your unqiue technology problems.
+                        <span class="first-letter">W</span>e are brothers eager to find a solution to your unqiue technology problems.
                         <div class="frames">
                             <div class="frame profile-frame frame-visible">
                                 <img class="profile-image" src="assets/david.jpg" alt="David Grams"/>
@@ -778,7 +778,7 @@
                 }
             }
 
-            var oldY, newY, oldX, newX, blockEnd, wheelTimeout;
+            var oldY, newY, oldX, newX, blockEnd, wheelTimeout, touchScroll;
             window.onwheel = function(event) {
                 if( blockEnd ) {
                     blockEnd = false;
@@ -802,9 +802,22 @@
             }, {passive: false});
             // stop with scroll event
             document.querySelectorAll(".content-pill").forEach( function(el) {
+                el.ontouchmove = function(e) {
+                    var atBottomScrollTop = el.scrollHeight - el.offsetHeight;
+                    if( (el.scrollTop >= atBottomScrollTop && newY < oldY) || (el.scrollTop <= 0 && newY > oldY) ) {
+                        e.preventDefault(); // don't scroll, change slide
+                    }
+                    else if( newY !== oldY ) {
+                        blockEnd = true; // otherwise, unless this is the start of a potential change slide, ensure a scroll
+                    }
+                    touchScroll = true;
+                }
                 el.onscroll = function(e) {
+                    touchScroll = false;
                     clearTimeout(wheelTimeout);
-                    blockEnd = true;
+                    if( !touchScroll ) {
+                        blockEnd = true;
+                    }
                 }
             });
             window.addEventListener('touchend', function(e) {
