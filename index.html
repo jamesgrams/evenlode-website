@@ -11,9 +11,7 @@
         <link rel="manifest" href="assets/icons/site.webmanifest">
         <link rel="mask-icon" href="assets/icons/safari-pinned-tab.svg" color="#5bbad5">
         <link rel="shortcut icon" href="assets/icons/favicon.ico">
-        <meta name="apple-mobile-web-app-title" content="Evenlode">
-        <meta name="application-name" content="Evenlode">
-        <meta name="msapplication-TileColor" content="#2b5797">
+        <meta name="msapplication-TileColor" content="#ffc40d">
         <meta name="msapplication-config" content="assets/icons/browserconfig.xml">
         <meta name="theme-color" content="#ffffff">
         <style>
@@ -40,17 +38,24 @@
             .pill {
                 width: 80vw;
                 padding: 40px;
-                border-radius: 40px;
-                background-color: rgba(255, 255, 255, 0.5);
+                border-top: 3px solid rgba(71, 138, 222);
                 position: relative;
+                background-color: rgba(248, 248, 248, 0.8);
             }
             .pill.hidden {
-                display: none;
+                display: none !important;
             }
             .header-pill {
                 text-align: center;
                 animation: bottom-up 0.5s;
                 margin-bottom: 40px;
+            }
+            #slide-1 .header-pill {
+                width: initial;
+                display: inline-block;
+                left: 50%;
+                transform: translateX(-50%);
+                padding: 20px;
             }
             h1,h2 {
                 font-family: "Redressed", script;
@@ -61,8 +66,7 @@
             }
             #logo {
                 border-radius: 50%;
-                width: 100px;
-                height: 100px;
+                height: 130px;
                 display: inline-block;
                 vertical-align: middle;
                 margin: 0 20px;
@@ -82,8 +86,7 @@
                 font-family: "Poppins", sans-serif;
                 padding: 20px 0;
                 font-size: 20px;
-                background-color: rgba(255, 255, 255, 0.5);
-                border-radius: 0 0 0 20px;
+                background-color: rgba(255, 255, 255, 0.8);
                 animation: fade-in 1.5s;
                 position: absolute;
                 top: 0;
@@ -118,6 +121,21 @@
             li > ul > li {
                 font-size: 80%;
             }
+            .icons {
+                margin-top: 20px;
+                text-align: center;
+            }
+            .icons-row {
+                display: inline-block;
+            }
+            .icon {
+                margin: 20px;
+                text-align: center;
+                display: inline-block;
+            }
+            .icon i {
+                font-size: 40px;
+            }
 
             nav {
                 display: inline-block;
@@ -133,22 +151,6 @@
             }
             .menu-bars {
                 display: none;
-            }
-
-            #slide-1::before {
-                background-image: url("assets/hero-small.jpg");
-            }
-            #slide-2::before {
-                background-image: url("assets/hero2-small.jpg");
-            }
-            #slide-3::before {
-                background-image: url("assets/hero3-small.jpg");
-            }
-            #slide-4::before {
-                background-image: url("assets/hero4-small.jpg");
-            }
-            #slide-5::before {
-                background-image: url("assets/hero5-small.jpg");
             }
             .slide, .slide::before {
                 width: 100vw;
@@ -252,12 +254,12 @@
                 width: 30px;
                 height: 30px;
                 border-radius: 50%;
-                background-color: white;
                 cursor: pointer;
                 user-select: none;
+                background-color: grey;
             }
             .frame-dot-selected {
-                background-color: grey;
+                background-color: rgba(71, 138, 222);
             }
             .profile-image {
                 float: left;
@@ -270,6 +272,18 @@
             }
             h3,h4 {
                 margin: 0;
+            }
+            .frame .frame-image {
+                height: 200px;
+            }
+            .frame-centered {
+                text-align: center;
+            }
+            .frame-caption {
+                font-weight: bold;
+            }
+            .frame-extra {
+                font-size: 16px;
             }
 
             @keyframes left-out {
@@ -301,6 +315,9 @@
                     text-align: center;    
                     margin: auto;
                     padding: 10px 0;
+                }
+                #logo {
+                    height: 100px;
                 }
             }
 
@@ -387,6 +404,22 @@
                 content: "\f0c9";
             }
 
+            .fa-mobile-alt::before {
+                content: "\f3cd";
+            }
+
+            .fa-desktop::before {
+                content: "\f108";
+            }
+
+            .fa-home::before {
+                content: "\f015";
+            }
+
+            .fa-magic::before {
+                content: "\f0d0";
+            }
+
             .sr-only-focusable:active, .sr-only-focusable:focus {
                 clip: auto;
                 height: auto;
@@ -419,17 +452,27 @@
                 font-family: 'Font Awesome 5 Free';
                 font-weight: 900; 
             }
+
+            video {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit:cover;
+            }
         </style>
     </head>
     <body>
+        <video src="assets/bg.mp4" playsinline loop muted alt="River Background Video"></video>
         <header>
             <a href="javascript:;" title="Menu" class="menu-bars"><i class="fas fa-bars"></i></a>
             <nav>
                 <a href="/">Home</a>
-                <a href="/about">About</a>
                 <a href="/services">Services</a>
                 <a href="/work">Work</a>
                 <a href="/contact">Contact</a>
+                <a href="/about">About</a>
             </nav>
             <a aria-label="Contact Evenlode by Email" title="Contact Evenlode by Email" href="mailto:contact@evenlode.dev"><i class="fas fa-envelope"></i></a>
             <a aria-label="Evenlode on Facebook" title="Evenlode on Facebook" href="https://www.facebook.com/EvenlodeDev/" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
@@ -438,71 +481,81 @@
             <div class="slide slide-visible" id="slide-1" data-url="/">
                 <div class="centered">
                     <div class="pill header-pill">
-                        <h1>Evenlode<img width=100 height=100 alt="Evenlode Logo" id="logo" src="assets/evenlode-small.png"/>Development</h1>
+                        <h1><img  height=200 alt="Evenlode Logo" id="logo" src="assets/evenlode-new.png"/></h1>
                     </div>
                     <div class="pill content-pill">
                         <span class="first-letter">E</span>venlode Development is a family-run software development firm based in Charlotte, NC. We offer a smorgasbord of services including creating and tweaking websites, crafting home and work automation software, building custom iOS and Android apps, and assistance with hardware and software setup. 
-                    </div>
-                </div>
-            </div>
-            <div class="slide" id="slide-2" data-url="/about">
-                <div class="centered">
-                    <div class="pill header-pill">
-                        <h2>About</h2>
-                    </div>
-                    <div class="pill content-pill">
-                        <span class="first-letter">W</span>e are brothers eager to find a solution to your unqiue technology problems.
-                        <div class="frames">
-                            <div class="frame profile-frame frame-visible">
-                                <img class="profile-image" src="assets/david.jpg" alt="David Grams"/>
-                                <h3>David Grams</h3>
-                                <h4>Manager</h4>
-                                <span>
-                                    David has experience with opening and overseeing multiple gym locations. He has a degree in business management from Liberty University.
-                                </span>
+                        <div class="icons">
+                            <div class="icons-row">
+                                <div class="icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    <div class="icon-label">App Development</div>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-desktop"></i>
+                                    <div class="icon-label">Web Development</div>
+                                </div>
                             </div>
-                            <div class="frame profile-frame">
-                                <img class="profile-image" src="assets/james.jpg" alt="James Grams"/>
-                                <h3>James Grams</h3>
-                                <h4>Developer</h4>
-                                <span>
-                                    James has been developing websites since 2008 and apps since 2014. 
-                                    He holds a degree in computer science from Gordon College and graduated with a 3.98 GPA. 
-                                    James worked for Christianbook.com in web development for almost four years where he attended workshops hosted by companies such as Google and Elastic.
-                                    Currently, he works for Pavilion Development with an offical title of IT Systems Administrator. He manages both IT and the company's websites.
-                                </span>
-                            </div>
-                            <div class="frame-dots">
-                                <div class="frame-dot frame-dot-selected"></div>
-                                <div class="frame-dot"></div>
+                            <div class="icons-row">
+                                <div class="icon">
+                                    <i class="fas fa-home"></i>
+                                    <div class="icon-label">Smart-Home Setup</div>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-magic"></i>
+                                    <div class="icon-label">Task Automation</div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="slide" id="slide-3" data-url="/services">
+            <div class="slide" id="slide-2" data-url="/services">
                 <div class="centered">
                     <div class="pill header-pill">
                         <h2>Services</h2>
                     </div>
                     <div class="pill content-pill">
                         <span class="first-letter">W</span>e enthusiastically offer the following services:
-                        <ul>
-                            <li>Website/app development and modification</li>
-                            <li>Productivity and automation programming
-                                <ul>
-                                    <li>e.g. A tool that automatically transfers data from websites into a spreadsheet</li>
-                                </ul>
-                            </li>
-                            <li>Browser extensions to enhance/remove content</li>
-                            <li>Smart Home media solutions</li>
-                            <li>Hardware and software setup</li>
-                            <li>Technology consulting</li>
-                        </ul>
+                        <div class="frames">
+                            <div class="frame frame-visible frame-centered">
+                                <img class="frame-image" src="assets/computer.jpeg" alt="Computer Stock Photo">
+                                <div class="frame-caption">Website/app development and modification</div>
+                            </div>
+                            <div class="frame frame-centered">
+                                <img class="frame-image" src="assets/cogs.jpeg" alt="Cogs Stock Photo">
+                                <div class="frame-caption">Productivity and automation programming</div>
+                                <div class="frame-extra">For example, a tool that automatically transfers data from websites into a spreadsheet</div>
+                            </div>
+                            <div class="frame frame-centered">
+                                <img class="frame-image" src="assets/browser.jpg" alt="Browser Stock Photo">
+                                <div class="frame-caption">Browser extensions to enhance/remove content</div>
+                            </div>
+                            <div class="frame frame-centered">
+                                <img class="frame-image" src="assets/home.jpeg" alt="Smart Home Stock Photo">
+                                <div class="frame-caption">Smart Home media solutions</div>
+                            </div>
+                            <div class="frame frame-centered">
+                                <img class="frame-image" src="assets/hardware.jpeg" alt="Hardware Stock Photo">
+                                <div class="frame-caption">Hardware and software setup</div>
+                            </div>
+                            <div class="frame frame-centered">
+                                <img class="frame-image" src="assets/consulting.jpg" alt="Consulting Stock Photo">
+                                <div class="frame-caption">Technology consulting</div>
+                            </div>
+                            <div class="frame-dots">
+                                <div class="frame-dot frame-dot-selected"></div>
+                                <div class="frame-dot"></div>
+                                <div class="frame-dot"></div>
+                                <div class="frame-dot"></div>
+                                <div class="frame-dot"></div>
+                                <div class="frame-dot"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="slide" id="slide-4" data-url="/work">
+            <div class="slide" id="slide-3" data-url="/work">
                 <div class="centered">
                     <div class="pill header-pill">
                         <h2>Work</h2>
@@ -549,7 +602,7 @@
                     </div>
                 </div>
             </div>
-            <div class="slide" id="slide-5" data-url="/contact">
+            <div class="slide" id="slide-4" data-url="/contact">
                 <div class="centered">
                     <div class="pill header-pill">
                         <h2>Contact</h2>
@@ -563,9 +616,47 @@
                     </div>
                 </div>
             </div>
+            <div class="slide" id="slide-5" data-url="/about">
+                <div class="centered">
+                    <div class="pill header-pill">
+                        <h2>About</h2>
+                    </div>
+                    <div class="pill content-pill">
+                        <span class="first-letter">W</span>e are brothers eager to find a solution to your unqiue technology problems.
+                        <div class="frames">
+                            <div class="frame profile-frame frame-visible">
+                                <img class="profile-image" src="assets/david.jpg" alt="David Grams"/>
+                                <h3>David Grams</h3>
+                                <h4>Manager</h4>
+                                <span>
+                                    David has experience with opening and overseeing multiple gym locations. He has a degree in business management from Liberty University.
+                                </span>
+                            </div>
+                            <div class="frame profile-frame">
+                                <img class="profile-image" src="assets/james.jpg" alt="James Grams"/>
+                                <h3>James Grams</h3>
+                                <h4>Developer</h4>
+                                <span>
+                                    James has been developing websites since 2008 and apps since 2014. 
+                                    He holds a degree in computer science from Gordon College and graduated with a 3.98 GPA. 
+                                    James worked for Christianbook.com in web development for almost four years where he attended workshops hosted by companies such as Google and Elastic.
+                                    Currently, he works for Pavilion Development with an offical title of IT Systems Administrator. He manages both IT and the company's websites.
+                                </span>
+                            </div>
+                            <div class="frame-dots">
+                                <div class="frame-dot frame-dot-selected"></div>
+                                <div class="frame-dot"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
 
         <script>
+            document.querySelector("video").onloadstart = function() {
+                this.play();
+            }
             var originalTitle = document.title;
             /**
              * Change slide by
@@ -687,27 +778,6 @@
             function hidePills( slide ) {
                 slide.querySelectorAll(".pill").forEach(function(el) {
                     el.classList.add("hidden");
-                });
-            }
-            /**
-             * Load images.
-             */
-            function loadImages() {
-                // load small images
-                document.querySelectorAll(".slide").forEach(function(el, index) {
-                    var src = "assets/hero" + (index ? (index+1) : "") + "-small.jpg";
-                    var img = new Image;
-                    img.src = src;
-                });
-                //load big images
-                document.querySelectorAll(".slide").forEach(function(el, index) {
-                    var src = "assets/hero" + (index ? (index+1) : "") + ".jpg";
-                    var img = new Image;
-                    img.onload = function() {
-                        el.style.backgroundImage = "url('"+src+"')"; // this is smoother than the background-image transition - to put the blurred one behind
-                        el.classList.add("image-loaded");
-                    }
-                    img.src = src;
                 });
             }
             /**
@@ -863,8 +933,6 @@
                 delete sessionStorage.redirect;
                 updateUrl(redirect ? redirect : normalizeUrl(location.pathname), true); // always start out with a state
             })();
-            // load images
-            loadImages();
             // initialize frames
             initializeFrames();
             // nav
