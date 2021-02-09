@@ -57,6 +57,11 @@
                 transform: translateX(-50%);
                 padding: 20px;
             }
+            .double-frame-mode #slide-2 .frame > div, .double-frame-mode #slide-3 .frame > div {
+                display: inline-block;
+                width: 50%;
+                vertical-align: top;
+            }
             h1,h2 {
                 font-family: "Redressed", script;
                 letter-spacing: 10px;
@@ -257,6 +262,9 @@
                 cursor: pointer;
                 user-select: none;
                 background-color: grey;
+            }
+            .frame-dot.hidden {
+                display: none !important;
             }
             .frame-dot-selected {
                 background-color: rgba(71, 138, 222);
@@ -812,7 +820,7 @@
              */
             function initializeFrames() {
                 document.querySelectorAll(".frames").forEach( function(frames) {
-                    frames.querySelectorAll(".frame-dot").forEach( function(dot, index) {
+                    frames.querySelectorAll(".frame-dot:not(.hidden)").forEach( function(dot, index) {
                         dot.onclick = function() {
                             if( document.querySelector(".frame-out-left,.frame-out-right,.frame-in-left,.frame-in-right") ) return;
                             if( dot.classList.contains("frame-dot-selected") ) return;
@@ -842,11 +850,12 @@
                     } );
                 });
             }
-            /*var doubleFrameMode = false;
+            var doubleFrameMode = false;
             window.onresize = function() {
                 if( window.innerWidth > 1024 ) {
                     if( !doubleFrameMode ) {
                         doubleFrameMode = true;
+                        document.body.classList.add("double-frame-mode");
                         document.querySelectorAll("#slide-2 .pill, #slide-3 .pill").forEach( function(el) {
                             var frames = el.querySelectorAll(".frame");
                             var dots = el.querySelectorAll(".frame-dot");
@@ -856,36 +865,38 @@
                                 if( frames[i+1].classList.contains("frame-visible") ) {
                                     frames[i].classList.add("frame-visible");
                                     dots[i].classList.add("frame-dot-selected");
+                                    dots[i+1].classList.remove("frame-dot-selected");
                                 }
                                 frames[i+1].parentElement.removeChild(frames[i+1]);
-                                dots[i+1].parentElement.removeChild(dots[i+1]);
+                                dots[i+1].classList.add("hidden");
                             }
                         } );
                     }
                 }
                 else if( doubleFrameMode ) {
                     doubleFrameMode = false;
+                    document.body.classList.remove("double-frame-mode");
                     document.querySelectorAll("#slide-2 .pill, #slide-3 .pill").forEach( function(el) {
                         var frames = el.querySelectorAll(".frame");
                         var dots = el.querySelectorAll(".frame-dot");
                         for( var i=0; i<frames.length; i++ ) {
                             var framesToBe = frames[i].querySelectorAll(":scope > div");
-                            if( framesToBe.length > 1 ) {
+                            if( framesToBe.length ) {
                                 var newFrame = document.createElement("div");
                                 newFrame.classList.add("frame");
-                                newFrame.classList.add("frame-centered");
+                                if(frames[i].classList.contains("frame-centered")) newFrame.classList.add("frame-centered");
                                 newFrame.innerHTML = framesToBe[1].innerHTML;
                                 frames[i].after(newFrame);
-
-                                var newDot = document.createElement("div");
-                                newDot.classList.add("frame-dot");
-                                dots[i].after(newDot);
+                                frames[i].innerHTML = framesToBe[0].innerHTML;
                             }
-                            frames[i].innerHTML = framesToBe[0].innerHTML;
                         }
+                        dots.forEach( function(el) {
+                            el.classList.remove("hidden");
+                        });
                     } );
                 }
-            }*/
+            }
+            window.onresize();
 
             /**
              * Bump frames.
@@ -899,11 +910,11 @@
                     var visibleIndex = frameList.indexOf(frames.querySelector(".frame-visible"));
                     var newIndex = (visibleIndex + number) % frameList.length;
                     if( newIndex < 0 ) newIndex = frameList.length + newIndex;
-                    Array.from( frames.querySelectorAll(".frame-dot") )[newIndex].click();
+                    Array.from( frames.querySelectorAll(".frame-dot:not(.hidden)") )[newIndex].click();
                 }
             }
 
-            var oldY, newY, oldX, newX, blockEnd, touchScroll, wheelTimeout, wheelStartTimeout;
+            var oldY, newY, oldX, newX, blockEnd, keyScroll, wheelTimeout, wheelStartTimeout;
             // custom "wheel started event" that requires some time inbetween wheels
             window.onwheelstart = function(event) {
                 if( blockEnd ) { // should never happen with wheel, since scroll will cancel the timeout to change slides
@@ -922,7 +933,7 @@
             };
             // basically just look for the wheel started event
             window.onwheel = function(event) {
-                touchScroll = false;
+                keyScroll = false;
                 if( !wheelStartTimeout ) {
                     window.onwheelstart(event);
                 }
@@ -944,7 +955,7 @@
             // stop with scroll event
             document.querySelectorAll(".content-pill").forEach( function(el) {
                 el.ontouchmove = function(e) {
-                    touchScroll = true;
+                    keyScroll = false;
                     var atBottomScrollTop = el.scrollHeight - el.offsetHeight;
                     if( (el.scrollTop >= atBottomScrollTop && newY < oldY) || (el.scrollTop <= 0 && newY > oldY) ) {
                         e.preventDefault(); // don't scroll, change slide
@@ -954,6 +965,7 @@
                     };
                 }
                 el.onscroll = function(e) {
+                    if( keyScroll ) blockEnd = true;
                     clearTimeout(wheelTimeout);
                     wheelTimeout = null;
                 }
@@ -974,6 +986,9 @@
                     else bumpFrames(1);
                 }
             }, {passive: false});
+            document.body.onkeydown = function(event) {
+                if( event.code === "ArrowDown" || event.code === "ArrowUp" ) keyScroll = true;
+            }
             document.body.onkeyup = function(event) {
                 if( blockEnd ) {
                     blockEnd = false;
