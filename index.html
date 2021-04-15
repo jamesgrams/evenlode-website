@@ -16,51 +16,11 @@
         <meta name="theme-color" content="#ffffff">
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Poppins&family=Redressed&display=swap');
-            html {
-                position: fixed;
-                height: 100vh;
-                overflow: hidden;
-                width: 100vw;
-            }
             body {
                 margin: 0;
                 padding: 0;
                 color: black;
-                height: 100vh;
-                overflow: hidden;
-            }
-            .centered {
-                position: absolute;
-                top: 50vh;
-                left: 50vw;
-                transform: translate(-50%, -50%);
-            }
-            .pill {
-                width: 80vw;
-                padding: 20px 40px;
-                border-top: 3px solid rgba(71, 138, 222);
-                position: relative;
-                background-color: rgba(248, 248, 248, 0.8);
-            }
-            .pill.hidden {
-                display: none !important;
-            }
-            .header-pill {
-                text-align: center;
-                animation: bottom-up 0.5s;
-                margin-bottom: 40px;
-            }
-            #slide-1 .header-pill {
-                width: initial;
-                display: inline-block;
-                left: 50%;
-                transform: translateX(-50%);
-                padding: 10px 20px;
-            }
-            .double-frame-mode #slide-2 .frame > div, .double-frame-mode #slide-3 .frame > div {
-                display: inline-block;
-                width: 50%;
-                vertical-align: top;
+                background-color: rgb(255, 255, 210);
             }
             h1,h2 {
                 font-family: "Redressed", script;
@@ -69,20 +29,34 @@
                 font-weight: normal;
                 margin: 0;
             }
+            h2 {
+                border-bottom: 5px double;
+            }
             #logo {
                 border-radius: 50%;
                 height: 130px;
                 display: inline-block;
                 vertical-align: middle;
-                margin: 0 20px;
+            }
+            .header-pill {
+                opacity: 0;
+                margin: 20px;
+                clear: both;
+                position: relative;
+            }
+            .slide:first-child .header-pill {
+                margin-top: 0;
             }
             .content-pill {
                 font-size: 24px;
-                overflow: hidden;
                 font-family: "Poppins", sans-serif;
-                animation: bottom-up 1s;
-                max-height: 50vh;
-                overflow-y: auto;
+                opacity: 0;
+                margin: 20px;
+                position: relative;
+            }
+            .pill-visible {
+                animation: bottom-up 0.7s;
+                opacity: 1;
             }
             .first-letter {
                 font-size: 42px;
@@ -91,16 +65,19 @@
                 font-family: "Poppins", sans-serif;
                 padding: 20px 0;
                 font-size: 20px;
-                background-color: rgba(255, 255, 255, 0.8);
-                animation: fade-in 1.5s;
-                position: absolute;
-                top: 0;
-                right: 0;
+                background-color: rgb(255, 255, 210);
+                animation: fade-in 0.7s;
+                position: fixed;
                 z-index: 3;
+                right: 0;
+                top: 0;
             }
             a {
                 color: black;
                 text-decoration: none;
+            }
+            #contact a {
+                word-break: break-all;
             }
             header a {
                 padding: 20px;
@@ -117,6 +94,11 @@
             .custom-li li, .custom-li li {
                 list-style: none;
             }
+            .list-extra {
+                font-size: 70%;
+                font-style: italic;
+            }
+
             li img, li i {
                 width: 20px;
                 display: inline-block;
@@ -145,9 +127,6 @@
             nav {
                 display: inline-block;
             }
-            .nav-selected {
-                text-decoration: underline;
-            }
             a:hover {
                 text-decoration: underline;
             }
@@ -157,55 +136,16 @@
             .menu-bars {
                 display: none;
             }
-            .slide, .slide::before {
-                width: 100vw;
-                height: 100vh;
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;
-                display: none;
-                position: absolute;
-                top: 0;
-                left: 0;
-            }
-            .slide::before {
-                content: ' ';
+            .slide {
                 display: block;
-                opacity: 1;
-                transition: opacity 1s;
+                padding: 20px;
             }
-            .slide.image-loaded::before {
-                opacity: 0;
+            .slide:nth-child(2n) {
+                background-color: #478ade;
+                color: white;
             }
-
-            .slide-visible {
-                display: block;
-            }
-            .slide-out {
-                transform-origin: top;
-                animation: cube-out 1s;
-            }
-            .slide-out.slide-up {
-                transform-origin: bottom !important;
-            }
-            @keyframes cube-out {
-                0% {transform: scaleY(1);}
-                100% {transform: scaleY(0);}
-            }
-            .slide-ready {
-                transform: scaleY(0);
-            }
-            .slide-in {
-                transform: scaleY(0);
-                transform-origin: bottom;
-                animation: cube-in 1s;
-            }
-            .slide-in.slide-up {
-                transform-origin: top !important;
-            }
-            @keyframes cube-in {
-                0% {transform: scaleY(0);}
-                100% {transform: scaleY(1);}
+            .slide:nth-child(2n) a {
+                color: white;
             }
 
             @keyframes fade-in {
@@ -213,61 +153,19 @@
                 100% { opacity: 1; }
             }
             @keyframes bottom-up {
-                0% { top: 10vh; opacity: 0; }
+                0% { top: 7vh; opacity: 0; }
                 100% { top: 0vh; opacity: 1; }
-            }
-            @keyframes daybreak {
-                0% {
-                    background-color: rgba(200,100,0,.5);    background-blend-mode: multiply;
-                }
-                100% {
-                    background-color: none;    background-blend-mode: multiply;
-                }
             }
             .frames {
                 position: relative;
-                margin-top: 20px;
-                display: grid;
-            }
-            .frame {
-                opacity: 0;
-                grid-area: 1/1;
-                position: relative;
-            }
-            .frame-out-left {
-                animation: left-out 1s;
-            }
-            .frame-in-left {
-                animation: left-in 1s;
-            }
-            .frame-out-right {
-                animation: right-out 1s;
-            }
-            .frame-in-right {
-                animation: right-in 1s;
-            }
-            .frame-visible {
-                opacity: 1;
-                z-index: 2;
-            }
-            .frame-dots {
-                margin-top: 20px;
                 text-align: center;
             }
-            .frame-dot {
-                display: inline-block;
-                width: 30px;
-                height: 30px;
-                border-radius: 50%;
-                cursor: pointer;
-                user-select: none;
-                background-color: grey;
-            }
-            .frame-dot.hidden {
-                display: none !important;
-            }
-            .frame-dot-selected {
-                background-color: rgba(71, 138, 222);
+            .frame {
+                position: relative;
+                vertical-align: top;
+                padding: 20px 0;
+                clear: both;
+                text-align: left;
             }
             .profile-image {
                 float: left;
@@ -282,10 +180,14 @@
                 margin: 0;
             }
             .frame .frame-image {
-                height: 200px;
+                height: 100px;
+                float: left;
+                margin-right: 20px;
+                border-radius: 20px 0 20px 0;
+                transform: rotate(-10deg);
             }
-            .frame-centered {
-                text-align: center;
+            .frame-image {
+                margin-bottom: 20px;
             }
             .frame-caption {
                 font-weight: bold;
@@ -293,30 +195,13 @@
             .frame-extra {
                 font-size: 16px;
             }
-
-            @keyframes left-out {
-                0% { transform: none; opacity: 1; }
-                100% { transform: translateX(-100%); opacity: 0; }
-            }
-            @keyframes left-in {
-                0% { transform: translateX(-100%); opacity: 0; }
-                100% { transform: none; opacity: 1; }
-            }
-            @keyframes right-out {
-                0% { transform: none; opacity: 1; }
-                100% { transform: translateX(100%); opacity: 0; }
-            }
-            @keyframes right-in {
-                0% { transform: translateX(100%); opacity: 0; }
-                100% { transform: none; opacity: 1; }
+            .clear {
+                clear: both;
             }
 
             @media only screen and (max-width: 1020px) {
-                h1,h2 {
-                    font-size: 28pt;
-                }
                 #logo {
-                    height: 100px;
+                    margin-top: 40px;
                 }
             }
 
@@ -325,6 +210,7 @@
                     display: block;
                     text-align: center;    
                     margin: auto;
+                    margin-top: 40px;
                     padding: 10px 0;
                 }
             }
@@ -338,64 +224,19 @@
                 }
                 header.nav-shown {
                     border-radius: 0;
-                    background-color: rgba(255, 255, 255, 0.75);
+                    background-color: rgb(255, 255, 210);
                 }
                 header.nav-shown nav {
                     display: block;
-                    position: absolute;
-                    background-color: rgba(255, 255, 255, 0.75);
+                    background-color: rgb(255, 255, 210);
                     margin-top: 20px;
+                    position: absolute;
                 }
                 header.nav-shown nav > a {
                     display: block;
                 }
-            }
-
-            @media only screen and (max-width: 670px) {
-                .pill {
-                    border-radius: 0;
-                    width: calc(100vw - 80px);
-                    left: 0;
-                    padding: 10px 40px;
-                }
-                .content-pill {
-                    font-size: 18px;
-                }
-                .first-letter {
-                    font-size: 32px;
-                }
-            } 
-
-            @media only screen and (max-height: 600px) and (max-width: 500px) {
-                h1,h2 {
-                    font-size: 18pt;
-                }
-                .first-letter {
-                    font-size: 16px;
-                }
-                .content-pill {
-                    font-size: 16px;
-                }
-                .header-pill {
-                    margin-bottom: 20px;
-                }
-            }
-
-            @media only screen and (max-width: 500px) {
-                .profile-image {
-                    float: none;
-                    margin: 0;
-                    display: block;
-                    margin: auto;
-                }
-                h3, h4 {
-                    text-align: center;
-                }
-                #slide-1 .header-pill {
-                    padding: 5px 20px;
-                }
                 #logo {
-                    height: 60px;
+                    height: 100px;
                 }
             }
 
@@ -466,14 +307,6 @@
                 font-weight: 900; 
             }
 
-            video {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                object-fit:cover;
-            }
             #debug {
                 position: absolute;
                 top: 10px;
@@ -483,85 +316,162 @@
         </style>
     </head>
     <body>
-        <video src="assets/bg.mp4" playsinline loop muted autoplay alt="River Background Video"></video>
         <div id="debug"></div>
         <header>
             <a href="javascript:;" title="Menu" class="menu-bars"><i class="fas fa-bars"></i></a>
             <nav>
-                <a href="/">Home</a>
-                <a href="/services">Services</a>
-                <a href="/work">Work</a>
-                <a href="/contact">Contact</a>
-                <a href="/about">About</a>
+                <a href="#home">Home</a>
+                <a href="#services">Services</a>
+                <a href="#work">Work</a>
+                <a href="#contact">Contact</a>
+                <a href="#about">About</a>
             </nav>
             <a aria-label="Contact Evenlode by Email" title="Contact Evenlode by Email" href="mailto:contact@evenlode.dev"><i class="fas fa-envelope"></i></a>
             <a aria-label="Evenlode on Facebook" title="Evenlode on Facebook" href="https://www.facebook.com/EvenlodeDev/" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
         </header>
         <main>
-            <div class="slide slide-visible" id="slide-1" data-url="/">
-                <div class="centered">
-                    <div class="pill header-pill">
-                        <h1><img  height=200 alt="Evenlode Logo" id="logo" src="assets/evenlode-new.png"/></h1>
-                    </div>
-                    <div class="pill content-pill">
-                        <span class="first-letter">E</span>venlode Development is a family-run software development firm based in Charlotte, NC. We offer a smorgasbord of services including creating and tweaking websites, crafting home and work automation software, building custom iOS and Android apps, and assistance with hardware and software setup. 
-                        <div class="icons">
-                            <div class="icons-row">
-                                <div class="icon">
-                                    <i class="fas fa-mobile-alt"></i>
-                                    <div class="icon-label">App Development</div>
-                                </div>
-                                <div class="icon">
-                                    <i class="fas fa-desktop"></i>
-                                    <div class="icon-label">Web Development</div>
-                                </div>
+            <div class="slide" id="home" data-url="/">
+                <div class="pill header-pill">
+                    <h1><img  height=200 alt="Evenlode Logo" id="logo" src="assets/evenlode-new.png"/></h1>
+                </div>
+                <div class="pill content-pill">
+                    <span class="first-letter">E</span>venlode Development is a family-run software development firm based in Charlotte, NC. We offer a smorgasbord of services including creating and tweaking websites, crafting home and work automation software, building custom iOS and Android apps, and assistance with hardware and software setup. 
+                    <div class="icons">
+                        <div class="icons-row">
+                            <div class="icon">
+                                <i class="fas fa-mobile-alt"></i>
+                                <div class="icon-label">App Development</div>
                             </div>
-                            <div class="icons-row">
-                                <div class="icon">
-                                    <i class="fas fa-home"></i>
-                                    <div class="icon-label">Smart-Home Setup</div>
-                                </div>
-                                <div class="icon">
-                                    <i class="fas fa-magic"></i>
-                                    <div class="icon-label">Task Automation</div>
-                                </div>
+                            <div class="icon">
+                                <i class="fas fa-desktop"></i>
+                                <div class="icon-label">Web Development</div>
+                            </div>
+                        </div>
+                        <div class="icons-row">
+                            <div class="icon">
+                                <i class="fas fa-home"></i>
+                                <div class="icon-label">Smart-Home Setup</div>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-magic"></i>
+                                <div class="icon-label">Task Automation</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="slide" id="slide-2" data-url="/services">
-                <div class="centered">
-                    <div class="pill header-pill">
-                        <h2>Services</h2>
+            <div class="slide" id="services">
+                <div class="pill header-pill">
+                    <h2>Services</h2>
+                </div>
+                <div class="pill content-pill">
+                    <span class="first-letter">W</span>e enthusiastically offer the following services:
+                    <div class="frames">
+                        <div class="frame">
+                            <img class="frame-image" src="assets/computer.jpeg" alt="Computer Stock Photo">
+                            <div class="frame-caption">Website/app development and modification</div>
+                            <div class="frame-extra">Got an idea for a website? Perhaps one for your company? Need updates? We'll be happy to help.</div>
+                        </div>
+                        <div class="frame">
+                            <img class="frame-image" src="assets/cogs.jpeg" alt="Cogs Stock Photo">
+                            <div class="frame-caption">Productivity and automation programming</div>
+                            <div class="frame-extra">Spend hours each day copying data into documents or spreadsheets? We can automate the process.</div>
+                        </div>
+                        <div class="frame">
+                            <img class="frame-image" src="assets/browser.jpg" alt="Browser Stock Photo">
+                            <div class="frame-caption">Browser extensions to enhance/remove content</div>
+                            <div class="frame-extra">Want to see price comparisons on your competitor's websites? Block specific content? We can supercharge your browsing experience.</div>
+                        </div>
+                        <div class="frame">
+                            <img class="frame-image" src="assets/home.jpeg" alt="Smart Home Stock Photo">
+                            <div class="frame-caption">Smart Home media solutions</div>
+                            <div class="frame-extra">Ever thought of converting your DVD collection into a personal Netflix? Controlling your home with your voice? Streaming your screen to other devices? We can do it all.</div>
+                        </div>
+                        <div class="frame">
+                            <img class="frame-image" src="assets/hardware.jpeg" alt="Hardware Stock Photo">
+                            <div class="frame-caption">Hardware and software setup</div>
+                            <div class="frame-extra">Need help with a TV? Computer? Smartphone? Tablet? Installing a database or simply Microsoft Office? We can help with that!</div>
+                        </div>
+                        <div class="frame">
+                            <img class="frame-image" src="assets/consulting.jpg" alt="Consulting Stock Photo">
+                            <div class="frame-caption">Technology consulting</div>
+                            <div class="frame-extra">Have an idea you want to talk through? Want to know the feasability of a project? We're here for you.</div>
+                        </div>
+                        <div class="clear"></div>
                     </div>
-                    <div class="pill content-pill">
-                        <span class="first-letter">W</span>e enthusiastically offer the following services:
+                </div>
+            </div>
+            <div class="slide" id="work">
+                <div class="pill header-pill">
+                    <h2>Work</h2>
+                </div>
+                <div class="pill content-pill">
+                    <ul class="custom-li">
                         <div class="frames">
-                            <div class="frame frame-visible frame-centered">
-                                <img class="frame-image" src="assets/computer.jpeg" alt="Computer Stock Photo">
-                                <div class="frame-caption">Website/app development and modification</div>
+                            <div class="frame frame-visible">
+                                <h3>Websites</h3>
+                                <li>
+                                    <a href="https://game103.net" target="_blank" rel="nofollow"><img alt="Game 103 Logo" src="https://game103.net/favicon.ico">Game 103</a>
+                                    <div class="list-extra">Game 103 is a site that hosts family-friendly games and entertainment. It consists of a database of games, including many created by Evenlode, with features such as a star rating system, social media sharing, advanced searching, game recommendations based on play history, and  and more.</div>
+                                </li>
+                                <li>
+                                    <a href="https://makingdorecipes.com" target="_blank" rel="nofollow"><img alt="Making Do Recipes Logo" src="https://makingdorecipes.com/favicon.ico">Making Do Recipes</a>
+                                    <div class="list-extra">A recipe finder for people with severe allergies that allows people to share their own recipes. This website lists the allergens in each of its ingredients, and allows people to enter either their safe foods or their allegens. From there, the website will tell them what recipes are safe for them. Recipes can list substitutes for ingredients, and people can enter an allergen tolerance count if they want to try their own substitutes.</div>
+                                </li>
+                                <li>
+                                    <a href="https://racecourse-demo.herokuapp.com" target="_blank" rel="nofollow"><img alt="Racecourse Logo" src="https://jamesgrams.com/images/racecourse.png">Racecourse</a>
+                                    <div class="list-extra">A simple, easy-to-learn online course content manager that is used currently by both churches and schools. It allows instructors to post content to classes they set up, and students to view that content. </div>
+                                </li>
                             </div>
-                            <div class="frame frame-centered">
-                                <img class="frame-image" src="assets/cogs.jpeg" alt="Cogs Stock Photo">
-                                <div class="frame-caption">Productivity and automation programming</div>
-                                <div class="frame-extra">For example, a tool that automatically transfers data from websites into a spreadsheet</div>
+                            <div class="frame">
+                                <h3>Tools</h3>
+                                <li>
+                                    <a href="https://github.com/jamesgrams/instagram-poster" target="_blank" rel="nofollow"><img alt="Instagram Poster Logo" src="https://www.instagram.com/favicon.ico">Instagram Poster</a>
+                                    <div class="list-extra">An automation tool that posts an image to instragram programitically. It can be easily set up to post an image at a specific point in time.</div>
+                                </li>
+                                <li>
+                                    <a href="https://github.com/jamesgrams/budgeteer" target="_blank" rel="nofollow"><img alt="Budgeteer Logo" src="https://raw.githubusercontent.com/jamesgrams/budgeteer/master/assets/logo.png">Budgeteer</a>
+                                    <div class="list-extra">Budgeteer is a budgeting program with a fun twist. It connects to your bank account, and lists purchases as coins. You can create treasure chests, which represent budget categories, to put your coins in to.</div>
+                                </li>
+                                <li>
+                                    <a href="https://github.com/jamesgrams/ringleader-docker" target="_blank" rel="nofollow"><img alt="iExec Logo" src="https://iex.ec/favicon.ico">Ringleader</a>
+                                    <div class="list-extra">Ringleader is a tool that allows users to run web-browser automation programs using the blockchain-based distributed computing system of iExec RLC.</div>
+                                </li>
                             </div>
-                            <div class="frame frame-centered">
-                                <img class="frame-image" src="assets/browser.jpg" alt="Browser Stock Photo">
-                                <div class="frame-caption">Browser extensions to enhance/remove content</div>
+                            <div class="frame">
+                                <h3>Home Media</h3>
+                                <li>
+                                    <a href="https://guystation.net" target="_blank" rel="nofollow"><img alt="GuyStation Logo" src="https://guystation.net/images/icons/favicon-32x32.png">GuyStation</a>
+                                    <div class="list-extra">GuyStation is home media software that primarly serves as an emulator frontend allowing for classic video games to be played easily with any controlleror keyboard. However, it can be accessed by any device with a web browser for not just control, but remote streaming. This allows you to play games on any device connected to your network. It has also a built-in media player (that can stream content remotely) and web browser.</div>
+                                </li>
+                                <li>
+                                    <a href="https://github.com/jamesgrams/papa-voice" target="_blank" rel="nofollow"><img alt="Papa Voice Logo" src="/assets/remote.png">Papa Voice</a>
+                                    <div class="list-extra">Papa Voice is a custom tool I made for my grandfather to control his TV with with his voice using commands such as "Watch Golf" or "Watch Fox Business". It works by looking up the TV guide online, and then matching phrases it receives from the microphone to those found in the TV guide listings. It communites with an IR blaster to change the channel appropriately.</div>
+                                </li>
+                                <li>
+                                    <a href="https://github.com/jamesgrams/spokapi" target="_blank" rel="nofollow"><img alt="Spokapi Logo" src="https://jamesgrams.com/images/spokapi.png">Spokapi</a>
+                                    <div class="list-extra">A tool that aggregates streaming content available from your TV provider (e.g. ESPN+) into one place that you can then watch with the click of a button from any computer on your network or your smartphone.</div>
+                                </li>
+                                <li>
+                                    <a href="https://github.com/jamesgrams/pub-chat" target="_blank" rel="nofollow"><img alt="Pub Chat Logo" src="https://github.com/jamesgrams/pub-chat/raw/master/assets/logo.png">Pub Chat</a>
+                                    <div class="list-extra">Pub Chat is a video-conferencing tool that allows members of the chat to play youtube videos for all to hear. The idea is to allow people to chat comfortably with music playing.</div>
+                                </li>
                             </div>
-                            <div class="frame frame-centered">
-                                <img class="frame-image" src="assets/home.jpeg" alt="Smart Home Stock Photo">
-                                <div class="frame-caption">Smart Home media solutions</div>
+                            <div class="frame">
+                                <h3>Apps</h3>
+                                <li>
+                                    <a href="https://play.google.com/store/apps/details?id=net.game103.ipahelper" target="_blank" rel="nofollow"><img alt="IPAide Logo" src="https://game103.net/images/icons/apps/ipaide.png">IPAide</a>
+                                    <div class="list-extra">IPAide is a tool for linguistic students that assists them with understanding and referncing the phoenetic alphabet.</div>
+                                </li>
+                                <li><a href="https://play.google.com/store/apps/details?id=edu.gordon.cs.bibleanimals" target="_blank" rel="nofollow"><img alt="Animals of the Bible Logo" src="https://game103.net/images/icons/apps/animalsofthebibleicon.webp">Animals of the Bible</a></li>
+                                <div class="list-extra">Animals of the Bible is a tool that lists all the animals of the Bible and provides references to what verses they are found in.</div>
                             </div>
-                            <div class="frame frame-centered">
-                                <img class="frame-image" src="assets/hardware.jpeg" alt="Hardware Stock Photo">
-                                <div class="frame-caption">Hardware and software setup</div>
-                            </div>
-                            <div class="frame frame-centered">
-                                <img class="frame-image" src="assets/consulting.jpg" alt="Consulting Stock Photo">
-                                <div class="frame-caption">Technology consulting</div>
+                            <div class="frame">
+                                <h3>Browser Extensions</h3>
+                                <li>
+                                    <a href="https://github.com/jamesgrams/foodcub" target="_blank" rel="nofollow"><img alt="Foodcub Logo" src="https://github.com/jamesgrams/foodcub/raw/master/icon32.png">Food Cub</a>
+                                    <div class="list-extra">Food Cub is a chrome browser extension built for people with allergies that highlights items that contain certain ingredients that the user chooses (e.g. corn) on Food Lion's and Aldi's websites. This way, people can know what to avoid without having to click on each item and read the ingredients.</div>
+                                </li>
                             </div>
                             <div class="frame-dots">
                                 <div class="frame-dot frame-dot-selected"></div>
@@ -569,104 +479,52 @@
                                 <div class="frame-dot"></div>
                                 <div class="frame-dot"></div>
                                 <div class="frame-dot"></div>
-                                <div class="frame-dot"></div>
                             </div>
                         </div>
-                    </div>
+                    </ul>
                 </div>
             </div>
-            <div class="slide" id="slide-3" data-url="/work">
-                <div class="centered">
-                    <div class="pill header-pill">
-                        <h2>Work</h2>
-                    </div>
-                    <div class="pill content-pill">
-                        <ul class="custom-li">
-                            <div class="frames">
-                                <div class="frame frame-visible">
-                                    <h3>Websites</h3>
-                                    <li><a href="https://game103.net" target="_blank" rel="nofollow"><img alt="Game 103 Logo" src="https://game103.net/favicon.ico">Game 103</a></li>
-                                    <li><a href="https://makingdorecipes.com" target="_blank" rel="nofollow"><img alt="Making Do Recipes Logo" src="https://makingdorecipes.com/favicon.ico">Making Do Recipes</a></li>
-                                    <li><a href="https://racecourse-demo.herokuapp.com" target="_blank" rel="nofollow"><img alt="Racecourse Logo" src="https://jamesgrams.com/images/racecourse.png">Racecourse</a></li>
-                                </div>
-                                <div class="frame">
-                                    <h3>Tools</h3>
-                                    <li><a href="https://github.com/jamesgrams/instagram-poster" target="_blank" rel="nofollow"><img alt="Instagram Poster Logo" src="https://www.instagram.com/favicon.ico">Instagram Poster</a></li>
-                                    <li><a href="https://github.com/jamesgrams/budgeteer" target="_blank" rel="nofollow"><img alt="Budgeteer Logo" src="https://raw.githubusercontent.com/jamesgrams/budgeteer/master/assets/logo.png">Budgeteer</a></li>
-                                    <li><a href="https://github.com/jamesgrams/ringleader-docker" target="_blank" rel="nofollow"><img alt="iExec Logo" src="https://iex.ec/favicon.ico">Ringleader</a></li>
-                                </div>
-                                <div class="frame">
-                                    <h3>Home Media</h3>
-                                    <li><a href="https://guystation.net" target="_blank" rel="nofollow"><img alt="GuyStation Logo" src="https://guystation.net/images/icons/favicon-32x32.png">GuyStation</a></li>
-                                    <li><a href="https://github.com/jamesgrams/spokapi" target="_blank" rel="nofollow"><img alt="Spokapi Logo" src="https://jamesgrams.com/images/spokapi.png">Spokapi</a></li>
-                                    <li><a href="https://github.com/jamesgrams/pub-chat" target="_blank" rel="nofollow"><img alt="Pub Chat Logo" src="https://github.com/jamesgrams/pub-chat/raw/master/assets/logo.png">Pub Chat</a></li>
-                                </div>
-                                <div class="frame">
-                                    <h3>Apps</h3>
-                                    <li><a href="https://play.google.com/store/apps/details?id=net.game103.ipahelper" target="_blank" rel="nofollow"><img alt="IPAide Logo" src="https://game103.net/images/icons/apps/ipaide.png">IPAide</a></li>
-                                    <li><a href="https://play.google.com/store/apps/details?id=edu.gordon.cs.bibleanimals" target="_blank" rel="nofollow"><img alt="Animals of the Bible Logo" src="https://game103.net/images/icons/apps/animalsofthebibleicon.webp">Animals of the Bible</a></li>
-                                </div>
-                                <div class="frame">
-                                    <h3>Browser Extensions</h3>
-                                    <li><a href="https://github.com/jamesgrams/foodcub" target="_blank" rel="nofollow"><img alt="Foodcub Logo" src="https://github.com/jamesgrams/foodcub/raw/master/icon32.png">Food Cub</a></li>
-                                </div>
-                                <div class="frame-dots">
-                                    <div class="frame-dot frame-dot-selected"></div>
-                                    <div class="frame-dot"></div>
-                                    <div class="frame-dot"></div>
-                                    <div class="frame-dot"></div>
-                                    <div class="frame-dot"></div>
-                                </div>
-                            </div>
-                        </ul>
-                    </div>
+            <div class="slide" id="contact">
+                <div class="pill header-pill">
+                    <h2>Contact</h2>
+                </div>
+                <div class="pill content-pill">
+                    <ul class="custom-li">
+                        <li><i class="fas fa-envelope"></i><a href="mailto:contact@evenlode.com">contact@evenlode.dev</a></li>
+                        <li><i class="fab fa-facebook-f"></i><a href="https://www.facebook.com/EvenlodeDev" target="_blank" rel="nofollow">facebook.com/EvenlodeDev</a></li>
+                        <li><i class="fab fa-instagram"></i><a href="https://www.instagram.com/evenlode.dev/" target="_blank" rel="nofollow">instagram.com/evenlode.dev</a>
+                    </ul>
                 </div>
             </div>
-            <div class="slide" id="slide-4" data-url="/contact">
-                <div class="centered">
-                    <div class="pill header-pill">
-                        <h2>Contact</h2>
-                    </div>
-                    <div class="pill content-pill">
-                        <ul class="custom-li">
-                            <li><i class="fas fa-envelope"></i><a href="mailto:contact@evenlode.com">contact@evenlode.dev</a></li>
-                            <li><i class="fab fa-facebook-f"></i><a href="https://www.facebook.com/EvenlodeDev" target="_blank" rel="nofollow">facebook.com/EvenlodeDev</a></li>
-                            <li><i class="fab fa-instagram"></i><a href="https://www.instagram.com/evenlode.dev/" target="_blank" rel="nofollow">instagram.com/evenlode.dev</a>
-                        </ul>
-                    </div>
+            <div class="slide" id="about">
+                <div class="pill header-pill">
+                    <h2>About</h2>
                 </div>
-            </div>
-            <div class="slide" id="slide-5" data-url="/about">
-                <div class="centered">
-                    <div class="pill header-pill">
-                        <h2>About</h2>
-                    </div>
-                    <div class="pill content-pill">
-                        <span class="first-letter">W</span>e are brothers eager to find a solution to your unqiue technology problems.
-                        <div class="frames">
-                            <div class="frame profile-frame frame-visible">
-                                <img class="profile-image" src="assets/david.jpg" alt="David Grams"/>
-                                <h3>David Grams</h3>
-                                <h4>Manager</h4>
-                                <span>
-                                    David has experience with opening and overseeing multiple gym locations. He has a degree in business management from Liberty University.
-                                </span>
-                            </div>
-                            <div class="frame profile-frame">
-                                <img class="profile-image" src="assets/james.jpg" alt="James Grams"/>
-                                <h3>James Grams</h3>
-                                <h4>Developer</h4>
-                                <span>
-                                    James has been developing websites since 2008 and apps since 2014. 
-                                    He holds a degree in computer science from Gordon College and graduated with a 3.98 GPA. 
-                                    James worked for Christianbook.com in web development for almost four years where he attended workshops hosted by companies such as Google and Elastic.
-                                    Currently, he works for Pavilion Development with an offical title of IT Systems Administrator. He manages both IT and the company's websites.
-                                </span>
-                            </div>
-                            <div class="frame-dots">
-                                <div class="frame-dot frame-dot-selected"></div>
-                                <div class="frame-dot"></div>
-                            </div>
+                <div class="pill content-pill">
+                    <span class="first-letter">W</span>e are brothers eager to find a solution to your unqiue technology problems.
+                    <div class="frames">
+                        <div class="frame profile-frame frame-visible">
+                            <img class="profile-image" src="assets/david.jpg" alt="David Grams"/>
+                            <h3>David Grams</h3>
+                            <h4>Manager</h4>
+                            <span>
+                                David has experience with opening and overseeing multiple gym locations. He has a degree in business management from Liberty University.
+                            </span>
+                        </div>
+                        <div class="frame profile-frame">
+                            <img class="profile-image" src="assets/james.jpg" alt="James Grams"/>
+                            <h3>James Grams</h3>
+                            <h4>Developer</h4>
+                            <span>
+                                James has been developing websites since 2008 and apps since 2014. 
+                                He holds a degree in computer science from Gordon College and graduated with a 3.98 GPA. 
+                                James worked for Christianbook.com in web development for almost four years where he attended workshops hosted by companies such as Google and Elastic.
+                                Currently, he works for Pavilion Development with an offical title of IT Systems Administrator. He manages both IT and the company's websites.
+                            </span>
+                        </div>
+                        <div class="frame-dots">
+                            <div class="frame-dot frame-dot-selected"></div>
+                            <div class="frame-dot"></div>
                         </div>
                     </div>
                 </div>
@@ -674,362 +532,6 @@
         </main>
 
         <script>
-            document.querySelector("video").onloadstart = function() {
-                this.play();
-            }
-            var originalTitle = document.title;
-            /**
-             * Change slide by
-             * @param {number} by - The amount to change slides by.
-             * @param {boolean} noHistory - True if we should not touch history.
-             **/
-            function changeSlideBy( by, noHistory ) {
-                if( !by ) return;
-                var slides = document.querySelectorAll(".slide");
-                var next = 0;
-                for( var i=0; i<slides.length; i++ ) {
-                    if( slides[i].classList.contains("slide-visible") ) {
-                        next = (i + by) % slides.length;
-                        if( next < 0 ) next = slides.length + next;
-                        break;
-                    }
-                }
-                changeSlide(next, by < 0, noHistory);
-            }
-            /**
-             * Change slide
-             * @param {number} next - The index of the next slide.
-             * @param {boolean} [up] - true if we are moving the cube up (i.e. from 2 -> 1 rather than 1 -> 2)
-             * @param {boolean} noHistory - True if we should not touch history.
-             **/
-            function changeSlide( next, up, noHistory ) {
-                if( document.querySelector(".slide-ready, .slide-out, .slide-in, .slide-up") ) return;
-                var slides = document.querySelectorAll(".slide");
-                var current = document.querySelector(".slide-visible");
-                if( up ) {
-                    current.classList.add("slide-up");
-                    slides[next].classList.add("slide-up");
-                }
-                slides[next].classList.add("slide-visible");
-                slides[next].classList.add("slide-ready");
-                if( !noHistory ) updateUrl(slides[next].getAttribute("data-url"), false, false, true); // change the url to the new slide unless we are told not to
-                hidePills(slides[next]);
-                setTimeout( function() {
-                    current.classList.add("slide-out");
-                    slides[next].classList.add("slide-in");
-                    slides[next].classList.remove("slide-ready");
-                }, 10);
-                setTimeout( function() {
-                    replayAnimation(slides[next]);
-                }, 500); // run the enimation at 50% in
-                setTimeout( function() {
-                    current.classList.remove("slide-visible");
-                    current.classList.remove("slide-out");
-                    slides[next].classList.remove("slide-in");
-                    current.classList.remove("slide-up");
-                    slides[next].classList.remove("slide-up");
-                }, 1000 ); // make sure this time matches the CSS
-            }
-            /**
-             * Update the url
-             * @param {string} url - The url of the slide to change to.
-             * @param {boolean} repalce - True if we should replace rather than push state.
-             * @param {boolean} noHistory - True if we should not touch history.
-             * @param {boolean} force - True if we should force a url update - i.e. we checked it is safe elsewhere.
-             */
-            function updateUrl( url, replace, noHistory, force ) {
-                if( !noHistory && !force && document.querySelector(".slide-ready, .slide-out, .slide-in, .slide-up") ) return; // don't update if we can't
-
-                var niceName = capitalize(url.replace(/\//g,""));
-                var title = (niceName ? (niceName + ": ") : "") + originalTitle;
-                document.title = title;
-
-                if( !noHistory ) {
-                    if( replace ) window.history.replaceState({},"",url);
-                    else window.history.pushState({},"",url);
-                }
-
-                // update the navbar
-                document.querySelectorAll("nav > a").forEach(function(el) {
-                    if( el.getAttribute("href") === url ) {
-                        el.classList.add("nav-selected");
-                    }
-                    else {
-                        el.classList.remove("nav-selected");
-                    }
-                })
-
-                // ensure we are going to the right slide
-                var slide = document.querySelector(".slide[data-url='"+url+"']");
-                if( slide && !slide.classList.contains("slide-visible") ) {
-                    var slideVisible = document.querySelector(".slide-visible");
-                    var index = parseInt(slide.getAttribute("id").match(/\d/));
-                    var currentIndex = parseInt(slideVisible.getAttribute("id").match(/\d/));
-                    if( replace ) {
-                        slideVisible.classList.remove("slide-visible");
-                        slide.classList.add("slide-visible");
-                    }
-                    else changeSlideBy(index - currentIndex, noHistory);
-                }
-            }
-            /**
-             * Capitalize.
-             **/
-            function capitalize(s) {
-                if (typeof s !== 'string') return '';
-                return s.charAt(0).toUpperCase() + s.slice(1);
-            }
-            /**
-             * Replay animation
-             * @param {HTMLElement} slide - The slide to replay animations on
-             */
-            function replayAnimation( slide ) {
-                slide.querySelectorAll(".pill").forEach(function(el) {
-                    el.classList.remove("hidden");
-                    el.style.animation = "none";
-                    el.offsetHeight;
-                    el.style.animation = null;
-                });
-            }
-            /**
-             * Hide pills
-             * @param {HTMLElement} slide - The slide to set pills to hide pills on
-             */
-            function hidePills( slide ) {
-                slide.querySelectorAll(".pill").forEach(function(el) {
-                    el.classList.add("hidden");
-                });
-            }
-            /**
-             * Normalize a URL
-             * @param {string} url - The url to normalize.
-             */
-            function normalizeUrl( url ) {
-                if(!url) return "/";
-                var normalUrl = "/";
-                var onlyBaseLetters = url.replace(/\//g,"");
-                document.querySelectorAll(".slide").forEach(function(el) {
-                    if( onlyBaseLetters === el.getAttribute("data-url").replace("/","") ) {
-                        normalUrl = el.getAttribute("data-url")
-                    }
-                });
-                return normalUrl;
-            }
-            /**
-             * Initialize frames.
-             */
-            function initializeFrames() {
-                document.querySelectorAll(".frames").forEach( function(frames) {
-                    frames.querySelectorAll(".frame-dot:not(.hidden)").forEach( function(dot, index) {
-                        dot.onclick = function() {
-                            if( document.querySelector(".frame-out-left,.frame-out-right,.frame-in-left,.frame-in-right") ) return;
-                            if( dot.classList.contains("frame-dot-selected") ) return;
-
-                            frames.querySelector(".frame-dot-selected").classList.remove("frame-dot-selected");
-                            dot.classList.add("frame-dot-selected");
-                            var frameVisible = frames.querySelector(".frame-visible");
-                            var visibleIndex = Array.from( frames.querySelectorAll(".frame") ).indexOf(frameVisible);
-                            var frame = frames.querySelectorAll(".frame")[index];
-
-                            var outClass = "frame-out-right";
-                            var inClass = "frame-in-left";
-                            if( visibleIndex < index ) {
-                                outClass = "frame-out-left";
-                                inClass = "frame-in-right";
-                            }
-
-                            frameVisible.classList.add(outClass);
-                            frame.classList.add(inClass);
-                            frameVisible.classList.remove("frame-visible");
-                            frame.classList.add("frame-visible");
-                            setTimeout( function() {
-                                frameVisible.classList.remove(outClass);
-                                frame.classList.remove(inClass);
-                            }, 1000 ); // make sure this matches css
-                        }
-                    } );
-                });
-            }
-            var doubleFrameMode = false;
-            window.onresize = function() {
-                if( window.innerWidth > 1024 ) {
-                    if( !doubleFrameMode ) {
-                        doubleFrameMode = true;
-                        document.body.classList.add("double-frame-mode");
-                        document.querySelectorAll("#slide-2 .pill, #slide-3 .pill").forEach( function(el) {
-                            var frames = el.querySelectorAll(".frame");
-                            var dots = el.querySelectorAll(".frame-dot");
-                            for( var i=0; i<frames.length; i+=2 ) {
-                                if( i+1 >= frames.length ) continue;
-                                frames[i].innerHTML = "<div>" + frames[i].innerHTML + "</div><div>" + frames[i+1].innerHTML + "</div>";
-                                if( frames[i+1].classList.contains("frame-visible") ) {
-                                    frames[i].classList.add("frame-visible");
-                                    dots[i].classList.add("frame-dot-selected");
-                                    dots[i+1].classList.remove("frame-dot-selected");
-                                }
-                                frames[i+1].parentElement.removeChild(frames[i+1]);
-                                dots[i+1].classList.add("hidden");
-                            }
-                        } );
-                    }
-                }
-                else if( doubleFrameMode ) {
-                    doubleFrameMode = false;
-                    document.body.classList.remove("double-frame-mode");
-                    document.querySelectorAll("#slide-2 .pill, #slide-3 .pill").forEach( function(el) {
-                        var frames = el.querySelectorAll(".frame");
-                        var dots = el.querySelectorAll(".frame-dot");
-                        for( var i=0; i<frames.length; i++ ) {
-                            var framesToBe = frames[i].querySelectorAll(":scope > div");
-                            if( framesToBe.length ) {
-                                var newFrame = document.createElement("div");
-                                newFrame.classList.add("frame");
-                                if(frames[i].classList.contains("frame-centered")) newFrame.classList.add("frame-centered");
-                                newFrame.innerHTML = framesToBe[1].innerHTML;
-                                frames[i].after(newFrame);
-                                frames[i].innerHTML = framesToBe[0].innerHTML;
-                            }
-                        }
-                        dots.forEach( function(el) {
-                            el.classList.remove("hidden");
-                        });
-                    } );
-                }
-            }
-            window.onresize();
-
-            /**
-             * Bump frames.
-             * @param {number} number - The number of frames to bump by.
-             */
-            function bumpFrames(number) {
-                if( document.querySelector(".slide-ready, .slide-out, .slide-in, .slide-up") ) return;
-                var frames = document.querySelector(".slide-visible .frames");
-                if( frames ) {
-                    var frameList = Array.from( frames.querySelectorAll(".frame") );
-                    var visibleIndex = frameList.indexOf(frames.querySelector(".frame-visible"));
-                    var newIndex = (visibleIndex + number) % frameList.length;
-                    if( newIndex < 0 ) newIndex = frameList.length + newIndex;
-                    Array.from( frames.querySelectorAll(".frame-dot:not(.hidden)") )[newIndex].click();
-                }
-            }
-
-            var oldY, newY, oldX, newX, blockEnd, keyScroll, wheelTimeout, wheelStartTimeout;
-            // custom "wheel started event" that requires some time inbetween wheels
-            window.onwheelstart = function(event) {
-                if( blockEnd ) { // should never happen with wheel, since scroll will cancel the timeout to change slides
-                    blockEnd = false;
-                    return;
-                }
-                // wheel event occurs before scroll so we have to do this.
-                // scroll will cancel this teimout out and prevent the slide scroll
-                if( !wheelTimeout ) {
-                    wheelTimeout = setTimeout( function() {
-                        wheelTimeout = null;
-                        if( event.deltaY < 0 ) changeSlideBy(-1);
-                        else if( event.deltaY > 0 ) changeSlideBy(1);
-                    }, 50 );
-                }
-            };
-            // basically just look for the wheel started event
-            window.onwheel = function(event) {
-                keyScroll = false;
-                if( !wheelStartTimeout ) {
-                    window.onwheelstart(event);
-                }
-                clearTimeout(wheelStartTimeout);
-                wheelStartTimeout = setTimeout( function() {
-                    wheelStartTimeout = null;
-                }, 500);
-            }
-            window.addEventListener('touchstart', function(e) {
-                oldY = e.touches[0].clientY;
-                oldX = e.touches[0].clientX;
-                newY = oldY;
-                newX = oldX;
-            }, {passive: false});
-            window.addEventListener('touchmove', function(e) {
-                newY = e.touches[0].clientY;
-                newX = e.touches[0].clientX;
-            }, {passive: false});
-            // stop with scroll event
-            document.querySelectorAll(".content-pill").forEach( function(el) {
-                el.ontouchmove = function(e) {
-                    keyScroll = false;
-                    var atBottomScrollTop = el.scrollHeight - el.offsetHeight;
-                    if( (el.scrollTop >= atBottomScrollTop && newY < oldY) || (el.scrollTop <= 0 && newY > oldY) ) {
-                        e.preventDefault(); // don't scroll, change slide
-                    }
-                    else if( newY !== oldY ) {
-                        blockEnd = true; // otherwise, unless this is the start of a potential change slide, ensure a scroll
-                    };
-                }
-                el.onscroll = function(e) {
-                    if( keyScroll ) blockEnd = true;
-                    clearTimeout(wheelTimeout);
-                    wheelTimeout = null;
-                }
-            });
-            window.addEventListener('touchend', function(e) {
-                var xMore = false;
-                if( Math.abs(oldY - newY) < Math.abs(oldX - newX) ) xMore = true;
-                if( !xMore && Math.abs(oldY - newY) >= 20 ) {
-                    if( blockEnd ) {
-                        blockEnd = false;
-                        return;
-                    }
-                    if( oldY < newY ) changeSlideBy(-1);
-                    else changeSlideBy(1);
-                }
-                else if( xMore && Math.abs(oldX - newX) >= 20 ) {
-                    if( oldX < newX ) bumpFrames(-1);
-                    else bumpFrames(1);
-                }
-            }, {passive: false});
-            document.body.onkeydown = function(event) {
-                if( event.code === "ArrowDown" || event.code === "ArrowUp" ) keyScroll = true;
-            }
-            document.body.onkeyup = function(event) {
-                if( blockEnd ) {
-                    blockEnd = false;
-                    return;
-                }
-                switch( event.code ) {
-                    case "ArrowDown":
-                        changeSlideBy(1);
-                        break;
-                    case "ArrowUp":
-                        changeSlideBy(-1);
-                        break;
-                    case "ArrowLeft":
-                        bumpFrames(-1);
-                        break;
-                    case "ArrowRight":
-                        bumpFrames(1);
-                        break;
-                }
-            };
-
-            // handle redirect from the 404 page
-            (function(){
-                var redirect = normalizeUrl(sessionStorage.redirect);
-                delete sessionStorage.redirect;
-                updateUrl(redirect ? redirect : normalizeUrl(location.pathname), true); // always start out with a state
-            })();
-            // initialize frames
-            initializeFrames();
-            // nav
-            document.querySelectorAll("nav > a").forEach(function(a) {
-                a.onclick = function() {
-                    if( !a.classList.contains("nav-selected") ) {
-                        if( document.querySelector(".nav-shown") ) {
-                            document.querySelector(".menu-bars").click();
-                        }
-                        updateUrl(a.getAttribute("href"));
-                    }
-                    return false;
-                }
-            });
             // menu bars
             document.querySelector(".menu-bars").onclick = function() {
                 var header = document.querySelector("header");
@@ -1041,11 +543,14 @@
                 }
             }
 
-            window.onpopstate = function(e) {
-                if(e.state) {
-                    updateUrl( normalizeUrl(location.pathname), false, true ); // on pop state, update the url (forces the right slide) but do change change any history as that is changed in the pop state
+            var observer = new IntersectionObserver(function(entries) {
+                for( var i=0; i<entries.length; i++ ) {
+                    if( entries[i].isIntersecting ) entries[i].target.classList.add("pill-visible");
                 }
-            };
+            });
+            document.querySelectorAll(".pill").forEach(function(el) {
+                observer.observe(el);
+            });
         </script>
     </body>
 </html>
