@@ -139,6 +139,7 @@
             .slide {
                 display: block;
                 padding: 20px;
+                position: relative;
             }
             .slide:nth-child(2n) {
                 background-color: #478ade;
@@ -146,6 +147,24 @@
             }
             .slide:nth-child(2n) a {
                 color: white;
+            }
+            .slide:nth-child(2n)::before,  .slide:nth-child(2n)::after {
+                content: ' ';
+                display: block;
+                width: 50%;
+                height: 50px;
+                border-radius: 50%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-color: #478ade;
+                transform: translateY(-40%);
+            }
+            .slide:nth-child(2n)::after {
+                left: 49.1%;
+                background-color: rgb(255, 255, 210);
+                transform: translateY(-60%);
+                width: 52%;
             }
 
             @keyframes fade-in {
@@ -198,10 +217,50 @@
             .clear {
                 clear: both;
             }
+            .slideshow-wrapper {
+                padding: 20px;
+                text-align: center;
+                margin: auto;
+                text-align: center;
+            }
+            .slideshow {
+                position: relative;
+                height: 400px;
+                width: 713px;
+                border: 5px solid black;
+                outline: 10px solid #478ade;
+                display: inline-block;
+            }
+            .slideshow img {
+                opacity: 0;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                transition: opacity 1s;
+            }
+            .slideshow img.visible {
+                opacity: 1;
+                display: block;
+                z-index: 2;
+            }
+            .slideshow img.next {
+                display: block;
+                opacity: 1;
+            }
 
             @media only screen and (max-width: 1020px) {
                 #logo {
                     margin-top: 40px;
+                }
+            }
+
+            @media only screen and (max-width: 850px) {
+                .slideshow {
+                    width: 100%;
+                    height: 0;
+                    padding-bottom: 56.1%;
                 }
             }
 
@@ -356,6 +415,15 @@
                                 <i class="fas fa-magic"></i>
                                 <div class="icon-label">Task Automation</div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="slideshow-wrapper">
+                        <div class="slideshow">
+                            <img src="/assets/game103.png" alt="Game 103 Screenshot" class="visible">
+                            <img src="/assets/makingdorecipes.png" alt="Making Do Recipes Screenshot">
+                            <img src="/assets/racecourse.png" alt="Racecourse Screenshot">
+                            <img src="/assets/guystation.png" alt="GuyStation Screenshot">
+                            <img src="/assets/foodcub.png" alt="FoodCub Screenshot">
                         </div>
                     </div>
                 </div>
@@ -551,6 +619,27 @@
             document.querySelectorAll(".pill").forEach(function(el) {
                 observer.observe(el);
             });
+
+            // Change the images displayed
+            var changeTimeout;
+            function changeImages() {
+                var slideshow = document.querySelector(".slideshow");
+                if( slideshow.querySelector(".next") ) return;
+                clearTimeout(changeTimeout);
+                var currentImage = slideshow.querySelector(".visible");
+                var nextImage = currentImage.nextElementSibling;
+                if( !nextImage ) nextImage = slideshow.querySelector("img");
+                nextImage.classList.add("next");
+                currentImage.classList.remove("visible");
+                setTimeout( function() {
+                    nextImage.classList.add("visible");
+                    nextImage.classList.remove("next");
+                }, 1000 );
+                changeTimeout = setTimeout( changeImages, 10000 );
+            }
+
+            changeTimeout = setTimeout( changeImages, 10000 );
+            document.querySelector(".slideshow").onclick = changeImages;
         </script>
     </body>
 </html>
