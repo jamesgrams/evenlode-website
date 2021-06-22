@@ -20,7 +20,7 @@
                 margin: 0;
                 padding: 0;
                 color: black;
-                background-color: rgb(255, 255, 210);
+                background-color: rgb(255, 255, 245);
             }
             main {
                 max-width: 100vw;
@@ -69,7 +69,7 @@
                 font-family: "Poppins", sans-serif;
                 padding: 20px 0;
                 font-size: 20px;
-                background-color: rgb(255, 255, 210);
+                background-color: rgb(255, 255, 245);
                 animation: fade-in 0.7s;
                 position: fixed;
                 z-index: 3;
@@ -166,9 +166,13 @@
             }
             .slide:nth-child(2n)::after {
                 left: 49.1%;
-                background-color: rgb(255, 255, 210);
+                background-color: rgb(255, 255, 245);
                 transform: translateY(-60%);
                 width: 52%;
+            }
+            .first-paragraph {
+                border: 5px solid black;
+                padding: 20px;
             }
 
             @keyframes fade-in {
@@ -287,11 +291,11 @@
                 }
                 header.nav-shown {
                     border-radius: 0;
-                    background-color: rgb(255, 255, 210);
+                    background-color: rgb(255, 255, 245);
                 }
                 header.nav-shown nav {
                     display: block;
-                    background-color: rgb(255, 255, 210);
+                    background-color: rgb(255, 255, 245);
                     margin-top: 20px;
                     position: absolute;
                 }
@@ -335,6 +339,10 @@
 
             .fa-magic::before {
                 content: "\f0d0";
+            }
+
+            .fa-phone::before {
+                content: "\f095";
             }
 
             .sr-only-focusable:active, .sr-only-focusable:focus {
@@ -398,7 +406,9 @@
                     <h1><img  height=200 alt="Evenlode Logo" id="logo" src="assets/evenlode-new.png"/></h1>
                 </div>
                 <div class="pill content-pill">
-                    <span class="first-letter">E</span>venlode Development is a family-run software development firm based in Charlotte, NC. We offer a smorgasbord of services including creating and tweaking websites, crafting home and work automation software, building custom iOS and Android apps, and assistance with hardware and software setup. 
+                    <div class="first-paragraph">
+                        <span class="first-letter">E</span>venlode Development is a family-run software development firm based in Charlotte, NC. We offer a smorgasbord of services including creating and tweaking websites, crafting home and work automation software, building custom iOS and Android apps, and assistance with hardware and software setup. 
+                    </div>
                     <div class="icons">
                         <div class="icons-row">
                             <div class="icon">
@@ -421,7 +431,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="slideshow-wrapper">
+                    <!--<div class="slideshow-wrapper">
                         <div class="slideshow">
                             <img src="/assets/game103.png" alt="Game 103 Screenshot" class="visible">
                             <img src="/assets/makingdorecipes.png" alt="Making Do Recipes Screenshot">
@@ -429,7 +439,7 @@
                             <img src="/assets/guystation.png" alt="GuyStation Screenshot">
                             <img src="/assets/foodcub.png" alt="FoodCub Screenshot">
                         </div>
-                    </div>
+                    </div>-->
                 </div>
             </div>
             <div class="slide" id="services">
@@ -562,6 +572,7 @@
                 </div>
                 <div class="pill content-pill">
                     <ul class="custom-li">
+                        <li><i class="fa fa-phone"></i><a href="tel:7045026802" target="_blank" rel="nofollow">704-502-6802</a>
                         <li><i class="fas fa-envelope"></i><a href="mailto:contact@evenlode.com">contact@evenlode.dev</a></li>
                         <li><i class="fab fa-facebook-f"></i><a href="https://www.facebook.com/EvenlodeDev" target="_blank" rel="nofollow">facebook.com/EvenlodeDev</a></li>
                         <li><i class="fab fa-instagram"></i><a href="https://www.instagram.com/evenlode.dev/" target="_blank" rel="nofollow">instagram.com/evenlode.dev</a>
