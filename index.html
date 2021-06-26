@@ -86,6 +86,12 @@
             header a {
                 padding: 20px;
             }
+            header a[href="#contact"] {
+                background-color: #478ade;
+                border-radius: 20px;
+                color: white;
+                padding: 10px 20px;
+            }
             i {
                 font-style: normal;
             }
@@ -134,7 +140,7 @@
             a:hover {
                 text-decoration: underline;
             }
-            a.menu-bars:hover {
+            a.menu-bars:hover, header > a:hover {
                 text-decoration: none;
             }
             .menu-bars {
@@ -211,7 +217,6 @@
                 float: left;
                 margin-right: 20px;
                 border-radius: 20px 0 20px 0;
-                transform: rotate(-10deg);
             }
             .frame-image {
                 margin-bottom: 20px;
@@ -315,6 +320,7 @@
 
             .fa-facebook-f:before {
                 content: "\f39e";
+                color: #4267B2;
             }
 
             .fa-instagram:before {
@@ -394,8 +400,8 @@
                 <a href="#home">Home</a>
                 <a href="#services">Services</a>
                 <a href="#work">Work</a>
-                <a href="#contact">Contact</a>
                 <a href="#about">About</a>
+                <a href="#contact">Contact</a>
             </nav>
             <a aria-label="Contact Evenlode by Email" title="Contact Evenlode by Email" href="mailto:contact@evenlode.dev"><i class="fas fa-envelope"></i></a>
             <a aria-label="Evenlode on Facebook" title="Evenlode on Facebook" href="https://www.facebook.com/EvenlodeDev/" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
@@ -508,7 +514,7 @@
                             <div class="frame">
                                 <h3>Tools</h3>
                                 <li>
-                                    <a href="https://github.com/jamesgrams/instagram-poster" target="_blank" rel="nofollow"><img alt="Instagram Poster Logo" src="https://www.instagram.com/favicon.ico">Instagram Poster</a>
+                                    <a href="https://www.npmjs.com/package/instagram-poster" target="_blank" rel="nofollow"><img alt="Instagram Poster Logo" src="https://www.instagram.com/favicon.ico">Instagram Poster</a>
                                     <div class="list-extra">An automation tool that posts an image to instragram programitically. It can be easily set up to post an image at a specific point in time.</div>
                                 </li>
                                 <li>
@@ -566,19 +572,6 @@
                     </ul>
                 </div>
             </div>
-            <div class="slide" id="contact">
-                <div class="pill header-pill">
-                    <h2>Contact</h2>
-                </div>
-                <div class="pill content-pill">
-                    <ul class="custom-li">
-                        <li><i class="fa fa-phone"></i><a href="tel:7045026802" target="_blank" rel="nofollow">704-502-6802</a>
-                        <li><i class="fas fa-envelope"></i><a href="mailto:contact@evenlode.com">contact@evenlode.dev</a></li>
-                        <li><i class="fab fa-facebook-f"></i><a href="https://www.facebook.com/EvenlodeDev" target="_blank" rel="nofollow">facebook.com/EvenlodeDev</a></li>
-                        <li><i class="fab fa-instagram"></i><a href="https://www.instagram.com/evenlode.dev/" target="_blank" rel="nofollow">instagram.com/evenlode.dev</a>
-                    </ul>
-                </div>
-            </div>
             <div class="slide" id="about">
                 <div class="pill header-pill">
                     <h2>About</h2>
@@ -591,7 +584,7 @@
                             <h3>David Grams</h3>
                             <h4>Manager</h4>
                             <span>
-                                David has experience with opening and overseeing multiple gym locations. He has a degree in business management from Liberty University.
+                                David has over five years of experience in business management and has a degree in Business Administration. He works in project management handling all daily operations and tasks. He has a personal interest in IT and helping those in need. 
                             </span>
                         </div>
                         <div class="frame profile-frame">
@@ -599,10 +592,7 @@
                             <h3>James Grams</h3>
                             <h4>Developer</h4>
                             <span>
-                                James has been developing websites since 2008 and apps since 2014. 
-                                He holds a degree in computer science from Gordon College and graduated with a 3.98 GPA. 
-                                James worked for Christianbook.com in web development for almost four years where he attended workshops hosted by companies such as Google and Elastic.
-                                Currently, he works for Pavilion Development with an offical title of IT Systems Administrator. He manages both IT and the company's websites.
+                                James has been developing websites since 2008 and apps since 2014. James worked in web development for almost four years where he attended workshops hosted by companies such as Google and Elastic. Currently, he also works as an IT Systems Administrator. He manages both IT and several company’s websites. 
                             </span>
                         </div>
                         <div class="frame-dots">
@@ -610,6 +600,20 @@
                             <div class="frame-dot"></div>
                         </div>
                     </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="slide" id="contact">
+                <div class="pill header-pill">
+                    <h2>Contact</h2>
+                </div>
+                <div class="pill content-pill">
+                    <ul class="custom-li">
+                        <li><i class="fa fa-phone"></i><a href="tel:7045026802" target="_blank" rel="nofollow">704-502-6802</a>
+                        <li><i class="fas fa-envelope"></i><a href="mailto:contact@evenlode.com">contact@evenlode.dev</a></li>
+                        <li><i class="fab fa-facebook-f"></i><a href="https://www.facebook.com/EvenlodeDev" target="_blank" rel="nofollow">facebook.com/EvenlodeDev</a></li>
+                        <li><i class="fab fa-instagram"></i><a href="https://www.instagram.com/evenlode.dev/" target="_blank" rel="nofollow">instagram.com/evenlode.dev</a>
+                    </ul>
                 </div>
             </div>
         </main>
