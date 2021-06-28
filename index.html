@@ -25,6 +25,10 @@
             main {
                 max-width: 100vw;
                 overflow-x: hidden;
+                transition: filter 0.25s;
+            }
+            main.blurred {
+                filter: blur(2px);
             }
             h1,h2 {
                 font-family: "Redressed", script;
@@ -111,6 +115,7 @@
 
             li img, li i {
                 width: 20px;
+                height: 20px;
                 display: inline-block;
                 margin-right: 10px;
                 vertical-align: middle;
@@ -205,6 +210,7 @@
                 margin: 0 20px 20px 0;
                 border-radius: 50%;
                 width: 200px;
+                height: 200px;
             }
             .profile-frame > span {
                 font-size: 80%;
@@ -214,6 +220,7 @@
             }
             .frame .frame-image {
                 height: 100px;
+                width: 150px;
                 float: left;
                 margin-right: 20px;
                 border-radius: 20px 0 20px 0;
@@ -230,50 +237,116 @@
             .clear {
                 clear: both;
             }
-            .slideshow-wrapper {
-                padding: 20px;
-                text-align: center;
-                margin: auto;
-                text-align: center;
-            }
-            .slideshow {
-                position: relative;
-                height: 400px;
-                width: 713px;
-                border: 5px solid black;
-                outline: 10px solid #478ade;
-                display: inline-block;
-            }
-            .slideshow img {
+            form {
+                pointer-events: none;
                 opacity: 0;
-                height: 100%;
-                width: 100%;
-                position: absolute;
+                display: flex;
+                flex-wrap: wrap;
+                margin: auto;
+                max-width: 600px;
+                min-width: 300px;
+                border: 5px solid black;
+                padding: 20px;
+                z-index: 5;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: rgb(255, 255, 245);
+                max-height: calc(100vh - 120px);
+                overflow: auto;
+                transition: opacity 0.5s;
+                font-family: Poppins, sans-serif;
+            }
+            #mask {
+                z-index: 4;
+                width: 100vw;
+                height: 100vh;
+                background-color: white;
+                pointer-events: none;
+                opacity: 0;
+                position: fixed;
                 top: 0;
                 left: 0;
-                transition: opacity 1s;
+                transition: opacity 0.5s;
             }
-            .slideshow img.visible {
+            form.visible, #mask.visible {
+                pointer-events: all;
                 opacity: 1;
-                display: block;
-                z-index: 2;
             }
-            .slideshow img.next {
+            #mask.visible {
+                cursor: pointer;
+                opacity: 0.5;
+            }
+            form > label {
                 display: block;
-                opacity: 1;
+                position: relative;
+                width: 46%;
+                margin-top: 20px;
+                margin-right: 2%;
+            }
+            form > label:nth-child(2n) {
+                margin-right: 0;
+                margin-left: 2%;
+            }
+            form > label[for="description"], form > label[for="additional"], #form-error {
+                margin-left: 0;
+                margin-right: 0;
+                width: 100%;
+            }
+            form input, form textarea {
+                border: none;
+                border-bottom: 2px solid black;
+                padding: 10px;
+                font-size: 16px;
+                background-color: transparent;
+                font-family: Poppins, sans-serif;
+                width: calc(100% - 20px);
+            }
+            form .label-text {
+                position: absolute;
+                pointer-events: none;
+                font-size: 16px;
+                top: 10px;
+                left: 10px;
+                font-style: italic;
+                text-transform: none;
+                display: block;
+                overflow: hidden;
+                white-space: nowrap;
+                width: calc(100% - 20px);
+                color: rgb(78, 78, 78);
+                transition: 0.25s;
+            }
+            form input:focus ~ span, form textarea:focus ~ span,
+            form input.value ~ span, form textarea.value ~ span {
+                top: -14px;
+                font-size: 12px;
+            }
+            button {
+                background-color: #478ade;
+                border-radius: 20px;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                font-family: Poppins, sans-serif;
+                font-size: 18px;
+                cursor: pointer;
+                margin-top: 20px;
+                margin-left: auto;
+                transition: opacity 0.25s;
+            }
+            button.disabled {
+                pointer-events: none;
+                opacity: 0.5;
+            }
+            #show-contact {
+                margin-top: 0;
             }
 
             @media only screen and (max-width: 1020px) {
                 #logo {
                     margin-top: 40px;
-                }
-            }
-
-            @media only screen and (max-width: 850px) {
-                .slideshow {
-                    width: 100%;
-                    height: 0;
-                    padding-bottom: 56.1%;
                 }
             }
 
@@ -437,15 +510,6 @@
                             </div>
                         </div>
                     </div>
-                    <!--<div class="slideshow-wrapper">
-                        <div class="slideshow">
-                            <img src="/assets/game103.png" alt="Game 103 Screenshot" class="visible">
-                            <img src="/assets/makingdorecipes.png" alt="Making Do Recipes Screenshot">
-                            <img src="/assets/racecourse.png" alt="Racecourse Screenshot">
-                            <img src="/assets/guystation.png" alt="GuyStation Screenshot">
-                            <img src="/assets/foodcub.png" alt="FoodCub Screenshot">
-                        </div>
-                    </div>-->
                 </div>
             </div>
             <div class="slide" id="services">
@@ -494,82 +558,88 @@
                     <h2>Work</h2>
                 </div>
                 <div class="pill content-pill">
-                    <ul class="custom-li">
-                        <div class="frames">
-                            <div class="frame frame-visible">
-                                <h3>Websites</h3>
+                    <div class="frames">
+                        <div class="frame frame-visible">
+                            <h3>Websites</h3>
+                            <ul class="custom-li">
                                 <li>
-                                    <a href="https://game103.net" target="_blank" rel="nofollow"><img alt="Game 103 Logo" src="https://game103.net/favicon.ico">Game 103</a>
+                                    <a href="https://game103.net" target="_blank" rel="noopener"><img alt="Game 103 Logo" src="https://game103.net/favicon.ico">Game 103</a>
                                     <div class="list-extra">Game 103 is a site that hosts family-friendly games and entertainment. It consists of a database of games, including many created by Evenlode, with features such as a star rating system, social media sharing, advanced searching, game recommendations based on play history, and  and more.</div>
                                 </li>
                                 <li>
-                                    <a href="https://makingdorecipes.com" target="_blank" rel="nofollow"><img alt="Making Do Recipes Logo" src="https://makingdorecipes.com/favicon.ico">Making Do Recipes</a>
-                                    <div class="list-extra">A recipe finder for people with severe allergies that allows people to share their own recipes. This website lists the allergens in each of its ingredients, and allows people to enter either their safe foods or their allegens. From there, the website will tell them what recipes are safe for them. Recipes can list substitutes for ingredients, and people can enter an allergen tolerance count if they want to try their own substitutes.</div>
+                                    <a href="https://makingdorecipes.com" target="_blank" rel="noopener"><img alt="Making Do Recipes Logo" src="https://makingdorecipes.com/favicon.ico">Making Do Recipes</a>
+                                    <div class="list-extra">A recipe finder, <a href="https://fpiesfoundation.org/cooking-and-recipes/allergy-friendly-websites-and-cookbooks/" target="_blank" rel="noopener">featured by the FPIES Foundation</a>, for people with severe allergies that allows people to share their own recipes. This website lists the allergens in each of its ingredients, and allows people to enter either their safe foods or their allegens. From there, the website will tell them what recipes are safe for them. Recipes can list substitutes for ingredients, and people can enter an allergen tolerance count if they want to try their own substitutes.</div>
                                 </li>
                                 <li>
-                                    <a href="https://racecourse-demo.herokuapp.com" target="_blank" rel="nofollow"><img alt="Racecourse Logo" src="https://jamesgrams.com/images/racecourse.png">Racecourse</a>
+                                    <a href="https://racecourse-demo.herokuapp.com" target="_blank" rel="noopener"><img alt="Racecourse Logo" src="https://jamesgrams.com/images/racecourse.png">Racecourse</a>
                                     <div class="list-extra">A simple, easy-to-learn online course content manager that is used currently by both churches and schools. It allows instructors to post content to classes they set up, and students to view that content. </div>
                                 </li>
-                            </div>
-                            <div class="frame">
-                                <h3>Tools</h3>
+                            </ul>
+                        </div>
+                        <div class="frame">
+                            <h3>Tools</h3>
+                            <ul class="custom-li">
                                 <li>
-                                    <a href="https://www.npmjs.com/package/instagram-poster" target="_blank" rel="nofollow"><img alt="Instagram Poster Logo" src="https://www.instagram.com/favicon.ico">Instagram Poster</a>
-                                    <div class="list-extra">An automation tool that posts an image to instragram programitically. It can be easily set up to post an image at a specific point in time.</div>
+                                    <a href="https://www.npmjs.com/package/instagram-poster" target="_blank" rel="noopener"><img alt="Instagram Poster Logo" src="https://www.instagram.com/favicon.ico">Instagram Poster</a>
+                                    <div class="list-extra">A somewhat popular automation tool that posts an image to instragram programitically. It can be easily set up to post an image at a specific point in time.</div>
                                 </li>
                                 <li>
-                                    <a href="https://github.com/jamesgrams/budgeteer" target="_blank" rel="nofollow"><img alt="Budgeteer Logo" src="https://raw.githubusercontent.com/jamesgrams/budgeteer/master/assets/logo.png">Budgeteer</a>
+                                    <a href="https://github.com/jamesgrams/budgeteer" target="_blank" rel="noopener"><img alt="Budgeteer Logo" src="https://raw.githubusercontent.com/jamesgrams/budgeteer/master/assets/logo.png">Budgeteer</a>
                                     <div class="list-extra">Budgeteer is a budgeting program with a fun twist. It connects to your bank account, and lists purchases as coins. You can create treasure chests, which represent budget categories, to put your coins in to.</div>
                                 </li>
                                 <li>
-                                    <a href="https://github.com/jamesgrams/ringleader-docker" target="_blank" rel="nofollow"><img alt="iExec Logo" src="https://iex.ec/favicon.ico">Ringleader</a>
+                                    <a href="https://github.com/jamesgrams/ringleader-docker" target="_blank" rel="noopener"><img alt="iExec Logo" src="https://iex.ec/favicon.ico">Ringleader</a>
                                     <div class="list-extra">Ringleader is a tool that allows users to run web-browser automation programs using the blockchain-based distributed computing system of iExec RLC.</div>
                                 </li>
-                            </div>
-                            <div class="frame">
-                                <h3>Home Media</h3>
+                            </ul>
+                        </div>
+                        <div class="frame">
+                            <h3>Home Media</h3>
+                            <ul class="custom-li">
                                 <li>
-                                    <a href="https://guystation.net" target="_blank" rel="nofollow"><img alt="GuyStation Logo" src="https://guystation.net/images/icons/favicon-32x32.png">GuyStation</a>
-                                    <div class="list-extra">GuyStation is home media software that primarly serves as an emulator frontend allowing for classic video games to be played easily with any controlleror keyboard. However, it can be accessed by any device with a web browser for not just control, but remote streaming. This allows you to play games on any device connected to your network. It has also a built-in media player (that can stream content remotely) and web browser.</div>
+                                    <a href="https://guystation.net" target="_blank" rel="noopener"><img alt="GuyStation Logo" src="https://guystation.net/images/icons/favicon-32x32.png">GuyStation</a>
+                                    <div class="list-extra">GuyStation is home media software that primarly serves as an emulator frontend allowing for classic video games to be played easily with any controller or keyboard. However, it can be accessed by any device with a web browser for not just control, but remote streaming. This allows you to play games on any device connected to your network. It has also a built-in media player (that can stream content remotely) and web browser.</div>
                                 </li>
                                 <li>
-                                    <a href="https://github.com/jamesgrams/papa-voice" target="_blank" rel="nofollow"><img alt="Papa Voice Logo" src="/assets/remote.png">Papa Voice</a>
+                                    <a href="https://github.com/jamesgrams/papa-voice" target="_blank" rel="noopener"><img alt="Papa Voice Logo" src="/assets/remote.png">Papa Voice</a>
                                     <div class="list-extra">Papa Voice is a custom tool I made for my grandfather to control his TV with with his voice using commands such as "Watch Golf" or "Watch Fox Business". It works by looking up the TV guide online, and then matching phrases it receives from the microphone to those found in the TV guide listings. It communites with an IR blaster to change the channel appropriately.</div>
                                 </li>
+                            </ul>
+                        </div>
+                        <div class="frame">
+                            <h3>Apps</h3>
+                            <ul class="custom-li">
                                 <li>
-                                    <a href="https://github.com/jamesgrams/spokapi" target="_blank" rel="nofollow"><img alt="Spokapi Logo" src="https://jamesgrams.com/images/spokapi.png">Spokapi</a>
-                                    <div class="list-extra">A tool that aggregates streaming content available from your TV provider (e.g. ESPN+) into one place that you can then watch with the click of a button from any computer on your network or your smartphone.</div>
-                                </li>
-                                <li>
-                                    <a href="https://github.com/jamesgrams/pub-chat" target="_blank" rel="nofollow"><img alt="Pub Chat Logo" src="https://github.com/jamesgrams/pub-chat/raw/master/assets/logo.png">Pub Chat</a>
-                                    <div class="list-extra">Pub Chat is a video-conferencing tool that allows members of the chat to play youtube videos for all to hear. The idea is to allow people to chat comfortably with music playing.</div>
-                                </li>
-                            </div>
-                            <div class="frame">
-                                <h3>Apps</h3>
-                                <li>
-                                    <a href="https://play.google.com/store/apps/details?id=net.game103.ipahelper" target="_blank" rel="nofollow"><img alt="IPAide Logo" src="https://game103.net/images/icons/apps/ipaide.png">IPAide</a>
+                                    <a href="https://play.google.com/store/apps/details?id=net.game103.ipahelper" target="_blank" rel="noopener"><img alt="IPAide Logo" src="https://game103.net/images/icons/apps/ipaide.png">IPAide</a>
                                     <div class="list-extra">IPAide is a tool for linguistic students that assists them with understanding and referncing the phoenetic alphabet.</div>
                                 </li>
-                                <li><a href="https://play.google.com/store/apps/details?id=edu.gordon.cs.bibleanimals" target="_blank" rel="nofollow"><img alt="Animals of the Bible Logo" src="https://game103.net/images/icons/apps/animalsofthebibleicon.webp">Animals of the Bible</a></li>
-                                <div class="list-extra">Animals of the Bible is a tool that lists all the animals of the Bible and provides references to what verses they are found in.</div>
-                            </div>
-                            <div class="frame">
-                                <h3>Browser Extensions</h3>
                                 <li>
-                                    <a href="https://github.com/jamesgrams/foodcub" target="_blank" rel="nofollow"><img alt="Foodcub Logo" src="https://github.com/jamesgrams/foodcub/raw/master/icon32.png">Food Cub</a>
+                                    <a href="https://play.google.com/store/apps/details?id=edu.gordon.cs.bibleanimals" target="_blank" rel="noopener"><img alt="Animals of the Bible Logo" src="https://game103.net/images/icons/apps/animalsofthebibleicon.webp">Animals of the Bible</a>
+                                    <div class="list-extra">Animals of the Bible is a tool that lists all the animals of the Bible and provides references to what verses they are found in.</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="frame">
+                            <h3>Browser Extensions</h3>
+                            <ul class="custom-li">
+                                <li>
+                                    <a href="https://chrome.google.com/webstore/detail/gamepad-to-keyboard-mappe/apfnclocagjfbgefniagcgigcfgcocaj" target="_blank" rel="noopener"><img alt="Gamepad to Keyboard Mapper Logo" src="https://github.com/jamesgrams/gamepad-to-keyboard-mapper/raw/master/icon32.png">Gamepad to Keyboard Mapper</a>
+                                    <div class="list-extra">This extension allows users to map buttons on their gamepads to keys on their keyboard. This allows them to use controllers for browser games and applications that are only set up to work with keyboard controls.</div>
+                                </li>
+                                <li>
+                                    <a href="https://github.com/jamesgrams/foodcub" target="_blank" rel="noopener"><img alt="Foodcub Logo" src="https://github.com/jamesgrams/foodcub/raw/master/icon32.png">Food Cub</a>
                                     <div class="list-extra">Food Cub is a chrome browser extension built for people with allergies that highlights items that contain certain ingredients that the user chooses (e.g. corn) on Food Lion's and Aldi's websites. This way, people can know what to avoid without having to click on each item and read the ingredients.</div>
                                 </li>
-                            </div>
-                            <div class="frame-dots">
-                                <div class="frame-dot frame-dot-selected"></div>
-                                <div class="frame-dot"></div>
-                                <div class="frame-dot"></div>
-                                <div class="frame-dot"></div>
-                                <div class="frame-dot"></div>
-                            </div>
+                            </ul>
                         </div>
-                    </ul>
+                        <div class="frame-dots">
+                            <div class="frame-dot frame-dot-selected"></div>
+                            <div class="frame-dot"></div>
+                            <div class="frame-dot"></div>
+                            <div class="frame-dot"></div>
+                            <div class="frame-dot"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="slide" id="about">
@@ -608,15 +678,30 @@
                     <h2>Contact</h2>
                 </div>
                 <div class="pill content-pill">
+                    <button id="show-contact">Contact Form</button>
                     <ul class="custom-li">
-                        <li><i class="fa fa-phone"></i><a href="tel:7045026802" target="_blank" rel="nofollow">704-502-6802</a>
+                        <li><i class="fa fa-phone"></i><a href="tel:7045026802" target="_blank" rel="noopener">704-502-6802</a>
                         <li><i class="fas fa-envelope"></i><a href="mailto:contact@evenlode.com">contact@evenlode.dev</a></li>
-                        <li><i class="fab fa-facebook-f"></i><a href="https://www.facebook.com/EvenlodeDev" target="_blank" rel="nofollow">facebook.com/EvenlodeDev</a></li>
-                        <li><i class="fab fa-instagram"></i><a href="https://www.instagram.com/evenlode.dev/" target="_blank" rel="nofollow">instagram.com/evenlode.dev</a>
+                        <li><i class="fab fa-facebook-f"></i><a href="https://www.facebook.com/EvenlodeDev" target="_blank" rel="noopener">facebook.com/EvenlodeDev</a></li>
+                        <li><i class="fab fa-instagram"></i><a href="https://www.instagram.com/evenlode.dev/" target="_blank" rel="noopener">instagram.com/evenlode.dev</a>
                     </ul>
                 </div>
             </div>
         </main>
+        <div id="mask"></div>
+        <form>
+            <label for="name"><input type="text" name="name" id="name" required/><span class="label-text">Name</span></label>
+            <label for="company"><input type="text" name="company" id="company"/><span class="label-text">Company</span></label>
+            <label for="email"><input type="email" name="email" id="email" required/><span class="label-text">Email</span></label>
+            <label for="phone"><input type="tel" name="phone" id="phone"/><span class="label-text">Phone</span></label>
+            <label for="location"><input type="text" name="location" id="location"/><span class="label-text">Location</span></label>
+            <label for="description"><textarea name="description" id="description" required></textarea><span class="label-text">Description of Services Needed</span></label>
+            <label for="budget"><input type="text" name="budget" id="budget"/><span class="label-text">Budget</span></label>
+            <label for="current"><input type="text" name="current" id="current"/><span class="label-text">Current website</span></label>
+            <label for="additional"><textarea name="additional" id="additional"></textarea><span class="label-text">Additional Comments</span></label>
+            <div id="form-error"></div>
+            <button>Submit</button>
+        </form>
 
         <script>
             // menu bars
@@ -630,6 +715,7 @@
                 }
             }
 
+            // intersection observer
             var observer = new IntersectionObserver(function(entries) {
                 for( var i=0; i<entries.length; i++ ) {
                     if( entries[i].isIntersecting ) entries[i].target.classList.add("pill-visible");
@@ -639,26 +725,93 @@
                 observer.observe(el);
             });
 
-            // Change the images displayed
-            var changeTimeout;
-            function changeImages() {
-                var slideshow = document.querySelector(".slideshow");
-                if( slideshow.querySelector(".next") ) return;
-                clearTimeout(changeTimeout);
-                var currentImage = slideshow.querySelector(".visible");
-                var nextImage = currentImage.nextElementSibling;
-                if( !nextImage ) nextImage = slideshow.querySelector("img");
-                nextImage.classList.add("next");
-                currentImage.classList.remove("visible");
-                setTimeout( function() {
-                    nextImage.classList.add("visible");
-                    nextImage.classList.remove("next");
-                }, 1000 );
-                changeTimeout = setTimeout( changeImages, 10000 );
+            // modal
+            document.querySelector("#show-contact").onclick = function() {
+                document.querySelector("main").classList.add("blurred");
+                document.querySelector("#mask").classList.add("visible");
+                document.querySelector("form").classList.add("visible");
+            }
+            document.querySelector("#mask").onclick = function() {
+                document.querySelector("form").classList.remove("visible");
+                document.querySelector("#mask").classList.remove("visible");
+                document.querySelector("main").classList.remove("blurred");
             }
 
-            changeTimeout = setTimeout( changeImages, 10000 );
-            document.querySelector(".slideshow").onclick = changeImages;
+            // set if has value
+            function setHasValue(e) {
+                if( e.target.value ) {
+                    e.target.classList.add("value");
+                }
+                else {
+                    e.target.classList.remove("value");
+                }
+            }
+
+            var inputs = document.querySelectorAll("form input, form textarea");
+            for( var i=0; i<inputs.length; i++ ) {
+                inputs[i].oninput = setHasValue;
+                inputs[i].onchange = setHasValue;
+            }
+
+            // form submission
+            document.querySelector("form").onsubmit = function(e) {
+                e.preventDefault();
+                var formButton = document.querySelector("form button");
+                formButton.classList.add("disabled");
+                var fields = ["name", "company", "email", "phone", "location", "description", "budget", "current", "additional"];
+                var body = [];
+                for(var i=0; i<fields.length; i++) {
+                    body.push(fields[i] + ": " + document.getElementById(fields[i]).value);
+                }
+                body = body.join("<br><br>");
+                makeRequest( "POST", "https://game103.net/ws/contact.php", { 
+                    "email": "contact@evenlode.dev",
+                    "subject": "Evenlode.dev Form Submission",
+                    "body": body
+                }, function() {
+                    document.querySelector("#form-error").innerText = "Your message has been successfully submitted. We will be in contact soon.";
+                }, function() {
+                    document.querySelector("#form-error").innerText = "An error has ocurred. Please try again later.";
+                    formButton.classList.remove("disabled");
+                } );
+            }
+
+            // make request
+            function makeRequest(type, url, parameters, callback, errorCallback) {
+                var parameterKeys = Object.keys(parameters);
+                var parameterArray = [];
+                for( var i=0; i<parameterKeys.length; i++ ) {
+                    parameterArray.push( parameterKeys[i] + "=" + parameters[parameterKeys[i]] );
+                }
+
+                if( type == "GET" && parameterKeys.length ) {
+                    url = url + "?" + parameterArray.join("&");
+                }
+
+                var xhttp = new XMLHttpRequest();
+                xhttp.open(type, url, true);
+
+                if( type == "POST" && parameterKeys.length ) {
+                    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                } 
+
+                xhttp.onreadystatechange = function() {
+                    if( this.readyState == 4 ) {
+                        if( this.status == 200 ) {
+                            if( callback ) { callback(this.responseText); }
+                        }
+                        else {
+                            if( errorCallback ) { errorCallback(); }
+                        }
+                    }
+                }    
+                if( type == "POST" && parameterArray.length ) {
+                    xhttp.send( parameterArray.join("&") );
+                }
+                else {
+                    xhttp.send();
+                }
+            }
         </script>
     </body>
 </html>
