@@ -273,6 +273,7 @@
                 overflow: auto;
                 transition: opacity 0.5s;
                 font-family: Poppins, sans-serif;
+                align-items: center;
             }
             #mask {
                 z-index: 4;
@@ -310,7 +311,7 @@
                 margin-right: 0;
                 width: 100%;
             }
-            form input, form textarea {
+            form input:not([type="checkbox"]), form textarea {
                 border: none;
                 border-bottom: 2px solid black;
                 padding: 10px;
@@ -336,10 +337,14 @@
                 color: rgb(78, 78, 78);
                 transition: 0.25s;
             }
-            form input:focus ~ span, form textarea:focus ~ span,
-            form input.value ~ span, form textarea.value ~ span {
+            form input:focus ~ .label-text, form textarea:focus ~ .label-text,
+            form input.value ~ .label-text, form textarea.value ~ .label-text,
+            form input[type="date"] ~ span {
                 top: -14px;
                 font-size: 12px;
+            }
+            form input[type="date"] {
+                height: 25px;
             }
             button {
                 background-color: #478ade;
@@ -360,6 +365,12 @@
             }
             #show-contact {
                 margin-top: 0;
+            }
+            .hidden, .hidden2 {
+                display: none;
+            }
+            .flex-break {
+                width: 100%;
             }
 
             @media only screen and (max-width: 1020px) {
@@ -722,9 +733,20 @@
             <label for="email"><input type="email" name="email" id="email" required/><span class="label-text">Email</span></label>
             <label for="phone"><input type="tel" name="phone" id="phone"/><span class="label-text">Phone</span></label>
             <label for="location"><input type="text" name="location" id="location"/><span class="label-text">Location</span></label>
+            <label for="current"><input type="url" name="current" id="current"/><span class="label-text">Current website (if applicable)</span></label>
+            <label for="budget"><input type="number" name="budget" id="budget"/><span class="label-text">Budget</span></label>
+            <label for="completion"><input type="date" name="completion" id="completion"/><span class="label-text">Desired Completion Date</span></label>
             <label for="description"><textarea name="description" id="description" required></textarea><span class="label-text">Description of Services Needed</span></label>
-            <label for="budget"><input type="text" name="budget" id="budget"/><span class="label-text">Budget</span></label>
-            <label for="current"><input type="url" name="current" id="current"/><span class="label-text">Current website</span></label>
+            <div class="flex-break"></div>
+            <label for="website"><input type="checkbox" name="website" id="website"/><span>Website Request</span></label>
+            <div class="flex-break"></div>
+            <label for="domain" class="hidden"><input type="checkbox" name="domain" id="domain" ><span>Need Domain Name</span></label>
+            <label for="domain-name" class="hidden hidden2"><input type="text" name="domain-name" id="domain-name"/><span class="label-text">Domain Name Preference</span></label>
+            <div class="flex-break"></div>
+            <div class="flex-break"></div>
+            <label for="email-setup" class="hidden"><input type="checkbox" name="email-setup" id="email-setup"/><span>Email Setup</span></label>
+            <label for="page-count" class="hidden"><input type="number" name="page-count" id="page-count"/><span class="label-text">Number of Pages</span></label>
+            <label for="pages-vision" class="hidden flex-break"><textarea name="pages-vision" id="pages-vision"></textarea><span class="label-text">Vision for Each Page (Details Help!)</span></label>
             <label for="additional"><textarea name="additional" id="additional"></textarea><span class="label-text">Additional Comments</span></label>
             <div id="form-error"></div>
             <button>Submit</button>
@@ -781,11 +803,12 @@
             }
 
             // form submission
-            document.querySelector("form").onsubmit = function(e) {
+            var form = document.querySelector("form");
+            form.onsubmit = function(e) {
                 e.preventDefault();
                 var formButton = document.querySelector("form button");
                 formButton.classList.add("disabled");
-                var fields = ["name", "company", "email", "phone", "location", "description", "budget", "current", "additional"];
+                var fields = ["name", "company", "email", "phone", "location", "description", "budget", "current", "additional", "website", "domain", "domain-name", "email-setup", "page-count", "pages-vision"];
                 var body = [];
                 for(var i=0; i<fields.length; i++) {
                     body.push(fields[i] + ": " + document.getElementById(fields[i]).value);
@@ -801,6 +824,36 @@
                     document.querySelector("#form-error").innerText = "An error has ocurred. Please try again later.";
                     formButton.classList.remove("disabled");
                 } );
+            }
+
+            // form website section
+            var websiteCheckbox = document.querySelector("#website");
+            websiteCheckbox.onchange = function() {
+                if( websiteCheckbox.checked ) {
+                    form.querySelectorAll(".hidden").forEach(function(el) {
+                        el.classList.add("hidden-potential");
+                        el.classList.remove("hidden");
+                    })
+                }
+                else {
+                    form.querySelectorAll(".hidden-potential").forEach(function(el) {
+                        el.classList.add("hidden");
+                        el.classList.remove("hidden-potential");
+                    })
+                }
+            }
+
+            var domainCheckbox = document.querySelector("#domain");
+            domainCheckbox.onchange = function() {
+                var hidden2 = form.querySelector(".hidden2,.hidden2-potential");
+                if( domainCheckbox.checked ) {
+                    hidden2.classList.remove("hidden2");
+                    hidden2.classList.add("hidden2-potential");
+                }
+                else {
+                    hidden2.classList.add("hidden2");
+                    hidden2.classList.remove("hidden2-potential");
+                }
             }
 
             // make request
